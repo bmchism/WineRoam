@@ -8,7 +8,7 @@ import { useAuth } from "../lib/auth";
 
 // Vineyard hero image (Wikimedia Commons, CC).
 const HERO_IMG =
-  "https://commons.wikimedia.org/wiki/Special:FilePath/Vignoble_de_Lavaux_en_automne.jpg?width=1100";
+  "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1100&q=80&auto=format";
 
 // Positioned as a group activity first — the app is the excuse to gather.
 const OCCASIONS = [
@@ -46,9 +46,8 @@ export default function Landing() {
         <div className="land-hero-photo">
           <img
             src={HERO_IMG}
-            alt="Terraced vineyards at golden hour in Lavaux, Switzerland"
+            alt="Vineyard rows stretching to the horizon at golden hour"
             loading="eager"
-            referrerPolicy="no-referrer"
             onError={(e) => (e.currentTarget.closest(".land-hero-photo") as HTMLElement)?.classList.add("noimg")}
           />
         </div>

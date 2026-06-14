@@ -1,0 +1,5641 @@
+{
+ "Description": "Wine Roam app — core",
+ "Resources": {
+  "TableCD117FA1": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "PK",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "SK",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "gsi1pk",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "gsi1sk",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "GlobalSecondaryIndexes": [
+     {
+      "IndexName": "GSI1",
+      "KeySchema": [
+       {
+        "AttributeName": "gsi1pk",
+        "KeyType": "HASH"
+       },
+       {
+        "AttributeName": "gsi1sk",
+        "KeyType": "RANGE"
+       }
+      ],
+      "Projection": {
+       "ProjectionType": "ALL"
+      }
+     }
+    ],
+    "KeySchema": [
+     {
+      "AttributeName": "PK",
+      "KeyType": "HASH"
+     },
+     {
+      "AttributeName": "SK",
+      "KeyType": "RANGE"
+     }
+    ],
+    "PointInTimeRecoverySpecification": {
+     "PointInTimeRecoveryEnabled": true
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Table/Resource"
+   }
+  },
+  "AnthropicKeyF3EE8375": {
+   "Type": "AWS::SecretsManager::Secret",
+   "Properties": {
+    "Description": "Wine Roam — Anthropic Workspace API key (set value after deploy)",
+    "GenerateSecretString": {}
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/AnthropicKey/Resource"
+   }
+  },
+  "AnthropicAdminKeyF0ADD8E2": {
+   "Type": "AWS::SecretsManager::Secret",
+   "Properties": {
+    "Description": "Wine Roam — Anthropic Admin API key for org cost reporting",
+    "GenerateSecretString": {}
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/AnthropicAdminKey/Resource"
+   }
+  },
+  "VapidKey5C6447C5": {
+   "Type": "AWS::SecretsManager::Secret",
+   "Properties": {
+    "Description": "Wine Roam — Web Push VAPID {publicKey, privateKey, subject} (set value after deploy)",
+    "GenerateSecretString": {}
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/VapidKey/Resource"
+   }
+  },
+  "ResendKeyC31F0A1B": {
+   "Type": "AWS::SecretsManager::Secret",
+   "Properties": {
+    "Description": "Wine Roam — Resend {apiKey, fromEmail}. Shareable now; swap value to switch accounts.",
+    "GenerateSecretString": {}
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ResendKey/Resource"
+   }
+  },
+  "TwilioKey60B9DE36": {
+   "Type": "AWS::SecretsManager::Secret",
+   "Properties": {
+    "Description": "Wine Roam — Twilio {accountSid, authToken, fromNumber}. Swap value to switch accounts.",
+    "GenerateSecretString": {}
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/TwilioKey/Resource"
+   }
+  },
+  "UserPool6BA7E5F2": {
+   "Type": "AWS::Cognito::UserPool",
+   "Properties": {
+    "AccountRecoverySetting": {
+     "RecoveryMechanisms": [
+      {
+       "Name": "verified_email",
+       "Priority": 1
+      }
+     ]
+    },
+    "AdminCreateUserConfig": {
+     "AllowAdminCreateUserOnly": false
+    },
+    "AutoVerifiedAttributes": [
+     "email"
+    ],
+    "EmailVerificationMessage": "The verification code to your new account is {####}",
+    "EmailVerificationSubject": "Verify your new account",
+    "EnabledMfas": [
+     "SOFTWARE_TOKEN_MFA"
+    ],
+    "LambdaConfig": {
+     "PostAuthentication": {
+      "Fn::GetAtt": [
+       "AuthEventsFn22FCDEF4",
+       "Arn"
+      ]
+     }
+    },
+    "MfaConfiguration": "OPTIONAL",
+    "Policies": {
+     "PasswordPolicy": {
+      "MinimumLength": 10,
+      "RequireLowercase": true,
+      "RequireNumbers": true,
+      "RequireUppercase": true
+     }
+    },
+    "SmsVerificationMessage": "The verification code to your new account is {####}",
+    "UsernameAttributes": [
+     "email"
+    ],
+    "VerificationMessageTemplate": {
+     "DefaultEmailOption": "CONFIRM_WITH_CODE",
+     "EmailMessage": "The verification code to your new account is {####}",
+     "EmailSubject": "Verify your new account",
+     "SmsMessage": "The verification code to your new account is {####}"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/UserPool/Resource"
+   }
+  },
+  "UserPoolAuthDomain95EAFE2A": {
+   "Type": "AWS::Cognito::UserPoolDomain",
+   "Properties": {
+    "Domain": "wine-roam",
+    "UserPoolId": {
+     "Ref": "UserPool6BA7E5F2"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/UserPool/AuthDomain/Resource"
+   }
+  },
+  "UserPoolWebClient4C9370B0": {
+   "Type": "AWS::Cognito::UserPoolClient",
+   "Properties": {
+    "AllowedOAuthFlows": [
+     "code"
+    ],
+    "AllowedOAuthFlowsUserPoolClient": true,
+    "AllowedOAuthScopes": [
+     "openid",
+     "email",
+     "profile"
+    ],
+    "CallbackURLs": [
+     "https://wine.roamthrough.com/",
+     "http://localhost:5173/"
+    ],
+    "ExplicitAuthFlows": [
+     "ALLOW_USER_SRP_AUTH",
+     "ALLOW_REFRESH_TOKEN_AUTH"
+    ],
+    "LogoutURLs": [
+     "https://wine.roamthrough.com/",
+     "http://localhost:5173/"
+    ],
+    "PreventUserExistenceErrors": "ENABLED",
+    "SupportedIdentityProviders": [
+     "COGNITO"
+    ],
+    "UserPoolId": {
+     "Ref": "UserPool6BA7E5F2"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/UserPool/WebClient/Resource"
+   }
+  },
+  "UserPoolPostAuthenticationCognito62FAB912": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "AuthEventsFn22FCDEF4",
+      "Arn"
+     ]
+    },
+    "Principal": "cognito-idp.amazonaws.com",
+    "SourceArn": {
+     "Fn::GetAtt": [
+      "UserPool6BA7E5F2",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/UserPool/PostAuthenticationCognito"
+   }
+  },
+  "GoogleOAuthSecret963EF6DE": {
+   "Type": "AWS::SecretsManager::Secret",
+   "Properties": {
+    "Description": "Wine Roam — Google OAuth client secret: set { \"clientSecret\": \"...\" }",
+    "GenerateSecretString": {}
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/GoogleOAuthSecret/Resource"
+   }
+  },
+  "AppleOAuthSecretEFC33D7D": {
+   "Type": "AWS::SecretsManager::Secret",
+   "Properties": {
+    "Description": "Wine Roam — Apple Sign in private key (.p8): set { \"privateKey\": \"...\" }",
+    "GenerateSecretString": {}
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/AppleOAuthSecret/Resource"
+   }
+  },
+  "AdminGroup": {
+   "Type": "AWS::Cognito::UserPoolGroup",
+   "Properties": {
+    "Description": "Owner/admin users",
+    "GroupName": "admins",
+    "UserPoolId": {
+     "Ref": "UserPool6BA7E5F2"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/AdminGroup"
+   }
+  },
+  "Uploads4F6EB0FD": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "SSEAlgorithm": "AES256"
+       }
+      }
+     ]
+    },
+    "CorsConfiguration": {
+     "CorsRules": [
+      {
+       "AllowedHeaders": [
+        "*"
+       ],
+       "AllowedMethods": [
+        "PUT",
+        "GET"
+       ],
+       "AllowedOrigins": [
+        "https://wine.roamthrough.com",
+        "https://*.cloudfront.net"
+       ]
+      }
+     ]
+    },
+    "LifecycleConfiguration": {
+     "Rules": [
+      {
+       "ExpirationInDays": 365,
+       "Status": "Enabled"
+      }
+     ]
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Uploads/Resource"
+   }
+  },
+  "UploadsPolicy148F8199": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "Uploads4F6EB0FD"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "Uploads4F6EB0FD",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "Uploads4F6EB0FD",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "s3:GetObject",
+       "Condition": {
+        "StringEquals": {
+         "AWS:SourceArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":cloudfront::",
+            {
+             "Ref": "AWS::AccountId"
+            },
+            ":distribution/",
+            {
+             "Ref": "CDN2330F4C0"
+            }
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudfront.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "Uploads4F6EB0FD",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Uploads/Policy/Resource"
+   }
+  },
+  "SiteBucket397A1860": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "SSEAlgorithm": "AES256"
+       }
+      }
+     ]
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/SiteBucket/Resource"
+   }
+  },
+  "SiteBucketPolicy3AC1D0F8": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "SiteBucket397A1860"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "SiteBucket397A1860",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "SiteBucket397A1860",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "s3:GetObject",
+       "Condition": {
+        "StringEquals": {
+         "AWS:SourceArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":cloudfront::",
+            {
+             "Ref": "AWS::AccountId"
+            },
+            ":distribution/",
+            {
+             "Ref": "CDN2330F4C0"
+            }
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudfront.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "SiteBucket397A1860",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/SiteBucket/Policy/Resource"
+   }
+  },
+  "WebAcl": {
+   "Type": "AWS::WAFv2::WebACL",
+   "Properties": {
+    "DefaultAction": {
+     "Allow": {}
+    },
+    "Rules": [
+     {
+      "Name": "AWSCommon",
+      "OverrideAction": {
+       "None": {}
+      },
+      "Priority": 1,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesCommonRuleSet",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "awsCommon",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Action": {
+       "Block": {}
+      },
+      "Name": "RateLimit",
+      "Priority": 2,
+      "Statement": {
+       "RateBasedStatement": {
+        "AggregateKeyType": "IP",
+        "Limit": 2000
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "rateLimit",
+       "SampledRequestsEnabled": true
+      }
+     }
+    ],
+    "Scope": "CLOUDFRONT",
+    "VisibilityConfig": {
+     "CloudWatchMetricsEnabled": true,
+     "MetricName": "wineWeb",
+     "SampledRequestsEnabled": true
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/WebAcl"
+   }
+  },
+  "Cert5C9FAEC1": {
+   "Type": "AWS::CertificateManager::Certificate",
+   "Properties": {
+    "DomainName": "wine.roamthrough.com",
+    "DomainValidationOptions": [
+     {
+      "DomainName": "wine.roamthrough.com",
+      "HostedZoneId": "Z03017282RUCK867AHXWY"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "WineStack/Cert"
+     }
+    ],
+    "ValidationMethod": "DNS"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Cert/Resource"
+   }
+  },
+  "SecHeaders811FD6AC": {
+   "Type": "AWS::CloudFront::ResponseHeadersPolicy",
+   "Properties": {
+    "ResponseHeadersPolicyConfig": {
+     "Name": "WineStackSecHeaders59596764",
+     "SecurityHeadersConfig": {
+      "ContentTypeOptions": {
+       "Override": true
+      },
+      "FrameOptions": {
+       "FrameOption": "SAMEORIGIN",
+       "Override": true
+      },
+      "ReferrerPolicy": {
+       "Override": true,
+       "ReferrerPolicy": "strict-origin-when-cross-origin"
+      },
+      "StrictTransportSecurity": {
+       "AccessControlMaxAgeSec": 31536000,
+       "IncludeSubdomains": true,
+       "Override": true
+      }
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/SecHeaders/Resource"
+   }
+  },
+  "CDNOrigin1S3OriginAccessControl79AEF565": {
+   "Type": "AWS::CloudFront::OriginAccessControl",
+   "Properties": {
+    "OriginAccessControlConfig": {
+     "Name": "WineStackCDNOrigin1S3OriginAccessControlBF1F48B5",
+     "OriginAccessControlOriginType": "s3",
+     "SigningBehavior": "always",
+     "SigningProtocol": "sigv4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/CDN/Origin1/S3OriginAccessControl/Resource"
+   }
+  },
+  "CDNOrigin2S3OriginAccessControl5E5793F7": {
+   "Type": "AWS::CloudFront::OriginAccessControl",
+   "Properties": {
+    "OriginAccessControlConfig": {
+     "Name": "WineStackCDNOrigin2S3OriginAccessControlF026A827",
+     "OriginAccessControlOriginType": "s3",
+     "SigningBehavior": "always",
+     "SigningProtocol": "sigv4"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/CDN/Origin2/S3OriginAccessControl/Resource"
+   }
+  },
+  "CDN2330F4C0": {
+   "Type": "AWS::CloudFront::Distribution",
+   "Properties": {
+    "DistributionConfig": {
+     "Aliases": [
+      "wine.roamthrough.com"
+     ],
+     "CacheBehaviors": [
+      {
+       "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+       "Compress": true,
+       "PathPattern": "media/*",
+       "TargetOriginId": "WineStackCDNOrigin2E3B5C3F3",
+       "ViewerProtocolPolicy": "redirect-to-https"
+      }
+     ],
+     "CustomErrorResponses": [
+      {
+       "ErrorCachingMinTTL": 0,
+       "ErrorCode": 403,
+       "ResponseCode": 200,
+       "ResponsePagePath": "/index.html"
+      },
+      {
+       "ErrorCachingMinTTL": 0,
+       "ErrorCode": 404,
+       "ResponseCode": 200,
+       "ResponsePagePath": "/index.html"
+      }
+     ],
+     "DefaultCacheBehavior": {
+      "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+      "Compress": true,
+      "ResponseHeadersPolicyId": {
+       "Ref": "SecHeaders811FD6AC"
+      },
+      "TargetOriginId": "WineStackCDNOrigin13D1EBBEE",
+      "ViewerProtocolPolicy": "redirect-to-https"
+     },
+     "DefaultRootObject": "index.html",
+     "Enabled": true,
+     "HttpVersion": "http2",
+     "IPV6Enabled": true,
+     "Origins": [
+      {
+       "DomainName": {
+        "Fn::GetAtt": [
+         "SiteBucket397A1860",
+         "RegionalDomainName"
+        ]
+       },
+       "Id": "WineStackCDNOrigin13D1EBBEE",
+       "OriginAccessControlId": {
+        "Fn::GetAtt": [
+         "CDNOrigin1S3OriginAccessControl79AEF565",
+         "Id"
+        ]
+       },
+       "S3OriginConfig": {
+        "OriginAccessIdentity": ""
+       }
+      },
+      {
+       "DomainName": {
+        "Fn::GetAtt": [
+         "Uploads4F6EB0FD",
+         "RegionalDomainName"
+        ]
+       },
+       "Id": "WineStackCDNOrigin2E3B5C3F3",
+       "OriginAccessControlId": {
+        "Fn::GetAtt": [
+         "CDNOrigin2S3OriginAccessControl5E5793F7",
+         "Id"
+        ]
+       },
+       "S3OriginConfig": {
+        "OriginAccessIdentity": ""
+       }
+      }
+     ],
+     "ViewerCertificate": {
+      "AcmCertificateArn": {
+       "Ref": "Cert5C9FAEC1"
+      },
+      "MinimumProtocolVersion": "TLSv1.2_2021",
+      "SslSupportMethod": "sni-only"
+     },
+     "WebACLId": {
+      "Fn::GetAtt": [
+       "WebAcl",
+       "Arn"
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/CDN/Resource"
+   }
+  },
+  "AliasRecord851000D2": {
+   "Type": "AWS::Route53::RecordSet",
+   "Properties": {
+    "AliasTarget": {
+     "DNSName": {
+      "Fn::GetAtt": [
+       "CDN2330F4C0",
+       "DomainName"
+      ]
+     },
+     "HostedZoneId": {
+      "Fn::FindInMap": [
+       "AWSCloudFrontPartitionHostedZoneIdMap",
+       {
+        "Ref": "AWS::Partition"
+       },
+       "zoneId"
+      ]
+     }
+    },
+    "HostedZoneId": "Z03017282RUCK867AHXWY",
+    "Name": "wine.roamthrough.com.",
+    "Type": "A"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/AliasRecord/Resource"
+   }
+  },
+  "ApiFnServiceRoleD18AAE0E": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ApiFn/ServiceRole/Resource"
+   }
+  },
+  "ApiFnServiceRoleDefaultPolicy56A1E6E5": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "TableCD117FA1",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "TableCD117FA1",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "VapidKey5C6447C5"
+       }
+      },
+      {
+       "Action": [
+        "s3:Abort*",
+        "s3:DeleteObject*",
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "Uploads4F6EB0FD",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "Uploads4F6EB0FD",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "cloudwatch:DescribeAlarms",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "states:StartExecution",
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "BottlePipeline9FACFD73"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiFnServiceRoleDefaultPolicy56A1E6E5",
+    "Roles": [
+     {
+      "Ref": "ApiFnServiceRoleD18AAE0E"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ApiFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "ApiFnE0725F78": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "f6f92f7984c16e5ae8c3d13d998d479835f3906e6c16420baac3106fb2dcb462.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com",
+      "VAPID_SECRET_ARN": {
+       "Ref": "VapidKey5C6447C5"
+      },
+      "PIPELINE_ARN": {
+       "Ref": "BottlePipeline9FACFD73"
+      }
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "ApiFnServiceRoleD18AAE0E",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "ApiFnServiceRoleDefaultPolicy56A1E6E5",
+    "ApiFnServiceRoleD18AAE0E"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ApiFn/Resource",
+    "aws:asset:path": "asset.f6f92f7984c16e5ae8c3d13d998d479835f3906e6c16420baac3106fb2dcb462",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "EnrichFnServiceRole0AE88237": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/EnrichFn/ServiceRole/Resource"
+   }
+  },
+  "EnrichFnServiceRoleDefaultPolicyE339B184": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "TableCD117FA1",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "TableCD117FA1",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "AnthropicKeyF3EE8375"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "EnrichFnServiceRoleDefaultPolicyE339B184",
+    "Roles": [
+     {
+      "Ref": "EnrichFnServiceRole0AE88237"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/EnrichFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "EnrichFn7A15B8A6": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "d6f80579fe3fdca8d582c06dd4236b8c9a7aae7b7b4578ee1e7dc02b9ea6ff5e.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com",
+      "AI_FEATURE": "enrich"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "EnrichFnServiceRole0AE88237",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 90
+   },
+   "DependsOn": [
+    "EnrichFnServiceRoleDefaultPolicyE339B184",
+    "EnrichFnServiceRole0AE88237"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/EnrichFn/Resource",
+    "aws:asset:path": "asset.d6f80579fe3fdca8d582c06dd4236b8c9a7aae7b7b4578ee1e7dc02b9ea6ff5e",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "RecognizeFnServiceRole4684AE5F": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/RecognizeFn/ServiceRole/Resource"
+   }
+  },
+  "RecognizeFnServiceRoleDefaultPolicy20236D08": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "Uploads4F6EB0FD",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "Uploads4F6EB0FD",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "RecognizeFnServiceRoleDefaultPolicy20236D08",
+    "Roles": [
+     {
+      "Ref": "RecognizeFnServiceRole4684AE5F"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/RecognizeFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "RecognizeFn60724AE1": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "f403d61cb93299c29a54510e02d558d3ad9ca1c37cf2b80b9623188ef5b6319c.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "RecognizeFnServiceRole4684AE5F",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "RecognizeFnServiceRoleDefaultPolicy20236D08",
+    "RecognizeFnServiceRole4684AE5F"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/RecognizeFn/Resource",
+    "aws:asset:path": "asset.f403d61cb93299c29a54510e02d558d3ad9ca1c37cf2b80b9623188ef5b6319c",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "IntegrationsFnServiceRole22799EA4": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/IntegrationsFn/ServiceRole/Resource"
+   }
+  },
+  "IntegrationsFnEDD6C259": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "37e5c26a0a97a11568cc0a61588ba2848b80632c5530cf5d15e2f981459dd7fe.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "IntegrationsFnServiceRole22799EA4",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "IntegrationsFnServiceRole22799EA4"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/IntegrationsFn/Resource",
+    "aws:asset:path": "asset.37e5c26a0a97a11568cc0a61588ba2848b80632c5530cf5d15e2f981459dd7fe",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "QuizGenerateFnServiceRole9F3B2381": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/QuizGenerateFn/ServiceRole/Resource"
+   }
+  },
+  "QuizGenerateFnServiceRoleDefaultPolicyF6D8D490": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "TableCD117FA1",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "TableCD117FA1",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "AnthropicKeyF3EE8375"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "QuizGenerateFnServiceRoleDefaultPolicyF6D8D490",
+    "Roles": [
+     {
+      "Ref": "QuizGenerateFnServiceRole9F3B2381"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/QuizGenerateFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "QuizGenerateFn7A09FDDD": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "6558eef4d7249c565cf9a5297f4f9ed59d11ff18e539323d4c10efd167323d1d.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com",
+      "AI_FEATURE": "quiz"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "QuizGenerateFnServiceRole9F3B2381",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 60
+   },
+   "DependsOn": [
+    "QuizGenerateFnServiceRoleDefaultPolicyF6D8D490",
+    "QuizGenerateFnServiceRole9F3B2381"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/QuizGenerateFn/Resource",
+    "aws:asset:path": "asset.6558eef4d7249c565cf9a5297f4f9ed59d11ff18e539323d4c10efd167323d1d",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "AdminApiFnServiceRole3DBF280A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/AdminApiFn/ServiceRole/Resource"
+   }
+  },
+  "AdminApiFnServiceRoleDefaultPolicyABBE8083": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "TableCD117FA1",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "TableCD117FA1",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "cognito-idp:AdminAddUserToGroup",
+        "cognito-idp:AdminCreateUser",
+        "cognito-idp:AdminDeleteUser",
+        "cognito-idp:AdminDisableUser",
+        "cognito-idp:AdminEnableUser",
+        "cognito-idp:AdminGetUser",
+        "cognito-idp:AdminRemoveUserFromGroup",
+        "cognito-idp:AdminResetUserPassword",
+        "cognito-idp:AdminSetUserPassword",
+        "cognito-idp:ListUsers",
+        "cognito-idp:ListUsersInGroup"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "UserPool6BA7E5F2",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "AdminApiFnServiceRoleDefaultPolicyABBE8083",
+    "Roles": [
+     {
+      "Ref": "AdminApiFnServiceRole3DBF280A"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/AdminApiFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "AdminApiFnA81506EE": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "d31054f6c85f1d1d72261b4a410add677fbc594bf0ae26f76b782d45c8b636a8.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "AdminApiFnServiceRole3DBF280A",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "AdminApiFnServiceRoleDefaultPolicyABBE8083",
+    "AdminApiFnServiceRole3DBF280A"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/AdminApiFn/Resource",
+    "aws:asset:path": "asset.d31054f6c85f1d1d72261b4a410add677fbc594bf0ae26f76b782d45c8b636a8",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "AuthEventsFnServiceRole50DD14C8": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/AuthEventsFn/ServiceRole/Resource"
+   }
+  },
+  "AuthEventsFnServiceRoleDefaultPolicy8FFEED9C": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "TableCD117FA1",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "TableCD117FA1",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "AuthEventsFnServiceRoleDefaultPolicy8FFEED9C",
+    "Roles": [
+     {
+      "Ref": "AuthEventsFnServiceRole50DD14C8"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/AuthEventsFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "AuthEventsFn22FCDEF4": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "4bb8f3c066dd245051bfcd7ed07ece3525c0717f791db7c8566ac20ddfbea17b.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      }
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "AuthEventsFnServiceRole50DD14C8",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "AuthEventsFnServiceRoleDefaultPolicy8FFEED9C",
+    "AuthEventsFnServiceRole50DD14C8"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/AuthEventsFn/Resource",
+    "aws:asset:path": "asset.4bb8f3c066dd245051bfcd7ed07ece3525c0717f791db7c8566ac20ddfbea17b",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "CostApiFnServiceRole292E0961": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/CostApiFn/ServiceRole/Resource"
+   }
+  },
+  "CostApiFnServiceRoleDefaultPolicyE20ED08D": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "AnthropicAdminKeyF0ADD8E2"
+       }
+      },
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "TableCD117FA1",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "TableCD117FA1",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "ce:GetCostAndUsage",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CostApiFnServiceRoleDefaultPolicyE20ED08D",
+    "Roles": [
+     {
+      "Ref": "CostApiFnServiceRole292E0961"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/CostApiFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "CostApiFnBFF278F5": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "94833e5ce3f11ef3a9e073184ae18b51bb0b218d9fcc1c15eeb27ab00bb72480.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com",
+      "ANTHROPIC_WORKSPACE_ID": "wrkspc_01EWTjYKfBXnfepKr3xh94p9"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "CostApiFnServiceRole292E0961",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "CostApiFnServiceRoleDefaultPolicyE20ED08D",
+    "CostApiFnServiceRole292E0961"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/CostApiFn/Resource",
+    "aws:asset:path": "asset.94833e5ce3f11ef3a9e073184ae18b51bb0b218d9fcc1c15eeb27ab00bb72480",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "ChatFnServiceRoleC3825F1B": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ChatFn/ServiceRole/Resource"
+   }
+  },
+  "ChatFnServiceRoleDefaultPolicyD5F3AC4B": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "AnthropicKeyF3EE8375"
+       }
+      },
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "TableCD117FA1",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "TableCD117FA1",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ChatFnServiceRoleDefaultPolicyD5F3AC4B",
+    "Roles": [
+     {
+      "Ref": "ChatFnServiceRoleC3825F1B"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ChatFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "ChatFn5A5B3E47": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "8e37caec0f004973731cc5a8a2ffe238d4278e151cfcd683ce8231a0c8d43df3.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com",
+      "AI_FEATURE": "chat"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "ChatFnServiceRoleC3825F1B",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "ChatFnServiceRoleDefaultPolicyD5F3AC4B",
+    "ChatFnServiceRoleC3825F1B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ChatFn/Resource",
+    "aws:asset:path": "asset.8e37caec0f004973731cc5a8a2ffe238d4278e151cfcd683ce8231a0c8d43df3",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "InviteFnServiceRoleCB8D788F": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/InviteFn/ServiceRole/Resource"
+   }
+  },
+  "InviteFnServiceRoleDefaultPolicyED4B530C": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Ref": "ResendKeyC31F0A1B"
+        },
+        {
+         "Ref": "TwilioKey60B9DE36"
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "InviteFnServiceRoleDefaultPolicyED4B530C",
+    "Roles": [
+     {
+      "Ref": "InviteFnServiceRoleCB8D788F"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/InviteFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "InviteFn0D34862F": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "9aa80b685825c36c2907fc43339c760a71dd40b44c8878eff3c5b61b399f3c73.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "InviteFnServiceRoleCB8D788F",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "InviteFnServiceRoleDefaultPolicyED4B530C",
+    "InviteFnServiceRoleCB8D788F"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/InviteFn/Resource",
+    "aws:asset:path": "asset.9aa80b685825c36c2907fc43339c760a71dd40b44c8878eff3c5b61b399f3c73",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "ReminderSweepFnServiceRoleEA4DD303": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ReminderSweepFn/ServiceRole/Resource"
+   }
+  },
+  "ReminderSweepFnServiceRoleDefaultPolicy08ACE7C2": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "TableCD117FA1",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "TableCD117FA1",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Ref": "ResendKeyC31F0A1B"
+        },
+        {
+         "Ref": "TwilioKey60B9DE36"
+        },
+        {
+         "Ref": "VapidKey5C6447C5"
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ReminderSweepFnServiceRoleDefaultPolicy08ACE7C2",
+    "Roles": [
+     {
+      "Ref": "ReminderSweepFnServiceRoleEA4DD303"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ReminderSweepFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "ReminderSweepFn284D39E6": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "d12010fe8656a796347dda821cf945fc4d9531e647b1e364fc095fb8050a534c.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com",
+      "VAPID_SECRET_ARN": {
+       "Ref": "VapidKey5C6447C5"
+      }
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "ReminderSweepFnServiceRoleEA4DD303",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "ReminderSweepFnServiceRoleDefaultPolicy08ACE7C2",
+    "ReminderSweepFnServiceRoleEA4DD303"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ReminderSweepFn/Resource",
+    "aws:asset:path": "asset.d12010fe8656a796347dda821cf945fc4d9531e647b1e364fc095fb8050a534c",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "ModerateFnServiceRoleF9310F89": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ModerateFn/ServiceRole/Resource"
+   }
+  },
+  "ModerateFnServiceRoleDefaultPolicy2BC68804": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:Query",
+        "dynamodb:Scan"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "TableCD117FA1",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "TableCD117FA1",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "AnthropicKeyF3EE8375"
+       }
+      },
+      {
+       "Action": [
+        "dynamodb:BatchWriteItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "TableCD117FA1",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "TableCD117FA1",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ModerateFnServiceRoleDefaultPolicy2BC68804",
+    "Roles": [
+     {
+      "Ref": "ModerateFnServiceRoleF9310F89"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ModerateFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "ModerateFn95D53F59": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "4bf28f769ee081b0c4c223ed32916bcddfdb56f23d433ff88faa0095a9fd80ba.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com",
+      "AI_FEATURE": "moderate"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "ModerateFnServiceRoleF9310F89",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "ModerateFnServiceRoleDefaultPolicy2BC68804",
+    "ModerateFnServiceRoleF9310F89"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ModerateFn/Resource",
+    "aws:asset:path": "asset.4bf28f769ee081b0c4c223ed32916bcddfdb56f23d433ff88faa0095a9fd80ba",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "PrewarmListFnServiceRole24E621A4": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/PrewarmListFn/ServiceRole/Resource"
+   }
+  },
+  "PrewarmListFn93BB353C": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "64bf5161e4953d2bba75a0056c40edf80acce02ef782676c99795f0bd7ea00f2.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com"
+     }
+    },
+    "Handler": "index.list",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "PrewarmListFnServiceRole24E621A4",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "PrewarmListFnServiceRole24E621A4"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/PrewarmListFn/Resource",
+    "aws:asset:path": "asset.64bf5161e4953d2bba75a0056c40edf80acce02ef782676c99795f0bd7ea00f2",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "PrewarmOneFnServiceRole933797B6": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/PrewarmOneFn/ServiceRole/Resource"
+   }
+  },
+  "PrewarmOneFnServiceRoleDefaultPolicy8443C1BC": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "TableCD117FA1",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "TableCD117FA1",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "AnthropicKeyF3EE8375"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "PrewarmOneFnServiceRoleDefaultPolicy8443C1BC",
+    "Roles": [
+     {
+      "Ref": "PrewarmOneFnServiceRole933797B6"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/PrewarmOneFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "PrewarmOneFn7D3E5079": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-012185415876-us-east-1",
+     "S3Key": "64bf5161e4953d2bba75a0056c40edf80acce02ef782676c99795f0bd7ea00f2.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "TableCD117FA1"
+      },
+      "ANTHROPIC_SECRET_ARN": {
+       "Ref": "AnthropicKeyF3EE8375"
+      },
+      "ANTHROPIC_ADMIN_SECRET_ARN": {
+       "Ref": "AnthropicAdminKeyF0ADD8E2"
+      },
+      "UPLOAD_BUCKET": {
+       "Ref": "Uploads4F6EB0FD"
+      },
+      "USER_POOL_ID": {
+       "Ref": "UserPool6BA7E5F2"
+      },
+      "MONTHLY_BUDGET": "30",
+      "RESEND_SECRET_ARN": {
+       "Ref": "ResendKeyC31F0A1B"
+      },
+      "TWILIO_SECRET_ARN": {
+       "Ref": "TwilioKey60B9DE36"
+      },
+      "APP_ORIGIN": "https://wine.roamthrough.com",
+      "AI_FEATURE": "prewarm"
+     }
+    },
+    "Handler": "index.one",
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "PrewarmOneFnServiceRole933797B6",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 90
+   },
+   "DependsOn": [
+    "PrewarmOneFnServiceRoleDefaultPolicy8443C1BC",
+    "PrewarmOneFnServiceRole933797B6"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/PrewarmOneFn/Resource",
+    "aws:asset:path": "asset.64bf5161e4953d2bba75a0056c40edf80acce02ef782676c99795f0bd7ea00f2",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "ReminderSweepScheduleF5A9169B": {
+   "Type": "AWS::Events::Rule",
+   "Properties": {
+    "ScheduleExpression": "rate(15 minutes)",
+    "State": "ENABLED",
+    "Targets": [
+     {
+      "Arn": {
+       "Fn::GetAtt": [
+        "ReminderSweepFn284D39E6",
+        "Arn"
+       ]
+      },
+      "Id": "Target0"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ReminderSweepSchedule/Resource"
+   }
+  },
+  "ReminderSweepScheduleAllowEventRuleWineStackReminderSweepFnDD3D2A4B4F277069": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "ReminderSweepFn284D39E6",
+      "Arn"
+     ]
+    },
+    "Principal": "events.amazonaws.com",
+    "SourceArn": {
+     "Fn::GetAtt": [
+      "ReminderSweepScheduleF5A9169B",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ReminderSweepSchedule/AllowEventRuleWineStackReminderSweepFnDD3D2A4B"
+   }
+  },
+  "BottlePipelineRole4C389FBB": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "states.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/BottlePipeline/Role/Resource"
+   }
+  },
+  "BottlePipelineRoleDefaultPolicy24EC58BB": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "EnrichFn7A15B8A6",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::GetAtt": [
+          "RecognizeFn60724AE1",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "EnrichFn7A15B8A6",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "RecognizeFn60724AE1",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BottlePipelineRoleDefaultPolicy24EC58BB",
+    "Roles": [
+     {
+      "Ref": "BottlePipelineRole4C389FBB"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/BottlePipeline/Role/DefaultPolicy/Resource"
+   }
+  },
+  "BottlePipeline9FACFD73": {
+   "Type": "AWS::StepFunctions::StateMachine",
+   "Properties": {
+    "DefinitionString": {
+     "Fn::Join": [
+      "",
+      [
+       "{\"StartAt\":\"Recognize\",\"States\":{\"Recognize\":{\"Next\":\"Enrich\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ClientExecutionTimeoutException\",\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"OutputPath\":\"$.Payload\",\"Resource\":\"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+       {
+        "Fn::GetAtt": [
+         "RecognizeFn60724AE1",
+         "Arn"
+        ]
+       },
+       "\",\"Payload.$\":\"$\"}},\"Enrich\":{\"End\":true,\"Retry\":[{\"ErrorEquals\":[\"Lambda.ClientExecutionTimeoutException\",\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"OutputPath\":\"$.Payload\",\"Resource\":\"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+       {
+        "Fn::GetAtt": [
+         "EnrichFn7A15B8A6",
+         "Arn"
+        ]
+       },
+       "\",\"Payload.$\":\"$\"}}},\"TimeoutSeconds\":300}"
+      ]
+     ]
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "BottlePipelineRole4C389FBB",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "BottlePipelineRoleDefaultPolicy24EC58BB",
+    "BottlePipelineRole4C389FBB"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/BottlePipeline/Resource"
+   }
+  },
+  "PrewarmBatchRole1C6F277D": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "states.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/PrewarmBatch/Role/Resource"
+   }
+  },
+  "PrewarmBatchRoleDefaultPolicyE3ACE745": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "PrewarmListFn93BB353C",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::GetAtt": [
+          "PrewarmOneFn7D3E5079",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "PrewarmListFn93BB353C",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "PrewarmOneFn7D3E5079",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "PrewarmBatchRoleDefaultPolicyE3ACE745",
+    "Roles": [
+     {
+      "Ref": "PrewarmBatchRole1C6F277D"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/PrewarmBatch/Role/DefaultPolicy/Resource"
+   }
+  },
+  "PrewarmBatchA674E2B5": {
+   "Type": "AWS::StepFunctions::StateMachine",
+   "Properties": {
+    "DefinitionString": {
+     "Fn::Join": [
+      "",
+      [
+       "{\"StartAt\":\"PrewarmList\",\"States\":{\"PrewarmList\":{\"Next\":\"PrewarmMap\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ClientExecutionTimeoutException\",\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"Resource\":\"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+       {
+        "Fn::GetAtt": [
+         "PrewarmListFn93BB353C",
+         "Arn"
+        ]
+       },
+       "\",\"Payload.$\":\"$\"}},\"PrewarmMap\":{\"Type\":\"Map\",\"End\":true,\"ItemsPath\":\"$.Payload\",\"ItemProcessor\":{\"ProcessorConfig\":{\"Mode\":\"INLINE\"},\"StartAt\":\"PrewarmOne\",\"States\":{\"PrewarmOne\":{\"End\":true,\"Retry\":[{\"ErrorEquals\":[\"Lambda.ClientExecutionTimeoutException\",\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"OutputPath\":\"$.Payload\",\"Resource\":\"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+       {
+        "Fn::GetAtt": [
+         "PrewarmOneFn7D3E5079",
+         "Arn"
+        ]
+       },
+       "\",\"Payload.$\":\"$\"}}}},\"MaxConcurrency\":5}},\"TimeoutSeconds\":3600}"
+      ]
+     ]
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "PrewarmBatchRole1C6F277D",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "PrewarmBatchRoleDefaultPolicyE3ACE745",
+    "PrewarmBatchRole1C6F277D"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "WineStack/PrewarmBatch/Resource"
+   }
+  },
+  "ApiF70053CD": {
+   "Type": "AWS::AppSync::GraphQLApi",
+   "Properties": {
+    "AdditionalAuthenticationProviders": [
+     {
+      "AuthenticationType": "AMAZON_COGNITO_USER_POOLS",
+      "UserPoolConfig": {
+       "AwsRegion": "us-east-1",
+       "UserPoolId": {
+        "Ref": "UserPool6BA7E5F2"
+       }
+      }
+     }
+    ],
+    "AuthenticationType": "API_KEY",
+    "Name": "wine-api",
+    "XrayEnabled": true
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Resource"
+   }
+  },
+  "ApiSchema510EECD7": {
+   "Type": "AWS::AppSync::GraphQLSchema",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "Definition": "# AppSync schema for Wine Roam. Auth directives applied via CDK defaults.\n\ntype Winery {\n  id: ID!\n  name: String!\n  region: String!\n  appellation: String\n  country: String\n  winemaker: String\n  grapes: [String!]\n  notes: String\n  website: String\n}\n\ntype SourceLink @aws_api_key @aws_cognito_user_pools {\n  label: String!\n  url: String!\n}\n\ntype Bottle @aws_api_key @aws_cognito_user_pools {\n  id: ID!\n  producer: String!\n  name: String!\n  wineryId: String!\n  wineType: String!\n  vintage: Int\n  abv: Float!\n  region: String!\n  appellation: String\n  country: String\n  grapes: [String!]\n  aging: String\n  vinification: String\n  soil: String\n  climate: String\n  aromas: [String!]!\n  flavors: [String!]!\n  tastingNotes: String\n  story: String\n  accent: String!\n  verified: Boolean\n  organic: Boolean\n  biodynamic: Boolean\n  naturalWine: Boolean\n  imageKeys: [String!]\n  sources: [SourceLink!]\n  createdAt: String\n  updatedAt: String\n}\n\ntype Flight @aws_api_key @aws_cognito_user_pools {\n  id: ID!\n  title: String!\n  subtitle: String!\n  bottleIds: [String!]!\n  curated: Boolean!\n}\n\ntype TastingSession {\n  sessionId: ID!\n  tastingId: String!\n  hostId: String!\n  joinCode: String!\n  status: String!\n  pacing: String!\n  visibility: String!\n  currentStep: Int!\n  createdAt: String!\n}\n\ntype Participant {\n  sessionId: ID!\n  participantId: ID!\n  displayName: String!\n  accountId: String\n  joinedAt: String!\n}\n\ntype Rating {\n  sessionId: ID!\n  participantId: ID!\n  bottleId: ID!\n  appearance: Int\n  nose: Int\n  palate: Int\n  finish: Int\n  overall: Int\n  note: String\n  syncedAt: String!\n}\n\ntype Review @aws_api_key @aws_cognito_user_pools {\n  bottleId: ID!\n  userId: ID!\n  displayName: String!\n  body: String!\n  score: Int\n  nose: Int\n  palate: Int\n  finish: Int\n  published: Boolean!\n  moderation: String\n  createdAt: String!\n}\n\ntype LeaderboardEntry {\n  participantId: ID!\n  displayName: String!\n  correct: Int!\n  total: Int!\n  avgMs: Float!\n}\n\ninput RatingInput {\n  sessionId: ID!\n  participantId: ID!\n  bottleId: ID!\n  appearance: Int\n  nose: Int\n  palate: Int\n  finish: Int\n  overall: Int\n  note: String\n}\n\ninput ReviewInput {\n  bottleId: ID!\n  body: String!\n  score: Int\n  nose: Int\n  palate: Int\n  finish: Int\n  published: Boolean!\n}\n\ntype UploadTarget @aws_api_key @aws_cognito_user_pools {\n  uploadUrl: String!\n  key: String!\n  publicUrl: String!\n}\n\ntype UserProfile @aws_cognito_user_pools {\n  displayName: String!\n  phone: String!\n  notify: Boolean!\n  favorite: String!\n}\ninput ProfileInput {\n  displayName: String\n  phone: String\n  notify: Boolean\n  favorite: String\n}\ninput FlightInput {\n  id: String!\n  title: String!\n  subtitle: String!\n  bottleIds: [String!]!\n}\ninput BottlePatch {\n  verified: Boolean\n  wineryId: String\n  abv: Float\n  wineType: String\n  organic: Boolean\n}\n\ntype ShelfItem @aws_cognito_user_pools {\n  bottleId: ID!\n  status: String!\n  addedAt: String!\n}\n\ntype Reminder @aws_cognito_user_pools {\n  id: ID!\n  title: String!\n  message: String!\n  when: String!\n  channel: String!\n  email: String\n  phone: String\n}\ninput ReminderInput {\n  id: String!\n  title: String!\n  message: String!\n  when: String!\n  channel: String!\n  email: String\n  phone: String\n}\n\ntype TastingEntry @aws_cognito_user_pools {\n  id: ID!\n  flightId: String!\n  title: String!\n  bottleCount: Int!\n  avgScore: Float!\n  quizCorrect: Int\n  quizTotal: Int\n  mode: String!\n  createdAt: String!\n}\ninput TastingEntryInput {\n  id: String!\n  flightId: String!\n  title: String!\n  bottleCount: Int!\n  avgScore: Float!\n  quizCorrect: Int\n  quizTotal: Int\n  mode: String!\n  createdAt: String!\n}\n\ntype PopBottle @aws_api_key @aws_cognito_user_pools {\n  bottleId: ID!\n  count: Int!\n}\n\ntype Query {\n  listBottles: [Bottle!]!\n  bottlePopularity: [PopBottle!]!\n  getBottle(id: ID!): Bottle\n  getScanResult(imageKey: String!): Bottle\n  listFlights: [Flight!]!\n  getSession(sessionId: ID!): TastingSession\n  listParticipants(sessionId: ID!): [Participant!]!\n  listRatings(sessionId: ID!, bottleId: ID!): [Rating!]!\n  listReviews(bottleId: ID!): [Review!]!\n  leaderboard(sessionId: ID!): [LeaderboardEntry!]!\n  listPendingReviews: [Review!]! @aws_cognito_user_pools\n  adminListUsers(search: String, nextToken: String): AdminUserPage! @aws_cognito_user_pools\n  adminGetUser(username: ID!): AdminUserDetail! @aws_cognito_user_pools\n  adminAuditLog(limit: Int): [AuditEntry!]! @aws_cognito_user_pools\n  adminCosts(refresh: Boolean): AdminCosts! @aws_cognito_user_pools\n  getMyProfile: UserProfile! @aws_cognito_user_pools\n  listMyFlights: [Flight!]! @aws_cognito_user_pools\n  listMyHistory: [TastingEntry!]! @aws_cognito_user_pools\n  listMyFavorites: [String!]! @aws_cognito_user_pools\n  listMyShelf: [ShelfItem!]! @aws_cognito_user_pools\n  listMyReminders: [Reminder!]! @aws_cognito_user_pools\n  adminAnalytics(days: Int): [AnalyticsDay!]! @aws_cognito_user_pools\n  adminAlarms: [AlarmRow!]! @aws_cognito_user_pools\n  adminAiUsage(days: Int): [AiFeatureCost!]! @aws_cognito_user_pools\n  adminListFeedback(limit: Int): [Feedback!]! @aws_cognito_user_pools\n  adminPageViews: [PageView!]! @aws_cognito_user_pools\n}\n\ntype PageView @aws_cognito_user_pools {\n  page: String!\n  count: Int!\n}\n\ntype Feedback @aws_cognito_user_pools {\n  id: ID!\n  at: String!\n  category: String!\n  message: String!\n  email: String\n  path: String\n}\n\ntype AiFeatureCost @aws_cognito_user_pools {\n  feature: String!\n  model: String!\n  inputTokens: Float!\n  outputTokens: Float!\n  cacheReadTokens: Float!\n  cacheWriteTokens: Float!\n  calls: Int!\n  cost: Float!\n}\n\ntype AlarmRow @aws_cognito_user_pools {\n  name: String!\n  state: String!\n  reason: String!\n  metric: String!\n  updated: String!\n}\n\ntype ModerationResult @aws_api_key @aws_cognito_user_pools {\n  verdict: String!\n  reason: String!\n}\n\ntype AdminUser @aws_cognito_user_pools {\n  username: ID!\n  email: String!\n  status: String!\n  enabled: Boolean!\n  createdAt: String!\n  lastModified: String\n  emailVerified: Boolean\n  isAdmin: Boolean\n}\n\ntype AdminUserPage @aws_cognito_user_pools {\n  users: [AdminUser!]!\n  nextToken: String\n}\n\ntype AdminUserDetail @aws_cognito_user_pools {\n  username: ID!\n  email: String!\n  status: String!\n  enabled: Boolean!\n  createdAt: String!\n  lastModified: String\n  emailVerified: Boolean\n  mfaEnabled: Boolean!\n  preferredMfa: String\n  lastLogin: String\n  loginCount: Int\n  isAdmin: Boolean!\n}\n\ntype AuditEntry @aws_cognito_user_pools {\n  at: String!\n  actor: String!\n  action: String!\n  target: String!\n  detail: String!\n}\n\ntype CostLine @aws_cognito_user_pools {\n  name: String!\n  amount: Float!\n}\n\ntype ModelCost @aws_cognito_user_pools {\n  model: String!\n  inputTokens: Float!\n  outputTokens: Float!\n  cacheReadTokens: Float!\n  cacheWriteTokens: Float!\n  cost: Float!\n}\n\ntype AdminCosts @aws_cognito_user_pools {\n  awsMonth: Float!\n  anthropicMonth: Float!\n  anthropicEstimate: Float!\n  budget: Float!\n  asOf: String!\n  cached: Boolean!\n  awsByService: [CostLine!]!\n  awsDaily: [CostLine!]!\n  anthropicByModel: [ModelCost!]!\n}\n\ntype AnalyticsDay @aws_cognito_user_pools {\n  day: String!\n  pageView: Int!\n  tastingStarted: Int!\n  scan: Int!\n  quizAnswer: Int!\n  reviewPublished: Int!\n  liveHosted: Int!\n}\n\ntype Mutation {\n  startSession(tastingId: ID!, pacing: String!, visibility: String!): TastingSession!\n  advanceSession(sessionId: ID!, step: Int!, status: String): TastingSession!\n  joinSession(joinCode: String!, displayName: String!): Participant!\n  submitRating(input: RatingInput!): Rating!\n  answerQuiz(sessionId: ID!, participantId: ID!, questionId: ID!, choiceIndex: Int!, correct: Boolean!, ms: Int!): Boolean!\n  track(name: String!, path: String): Boolean!\n  submitFeedback(category: String!, message: String!, email: String, path: String): Boolean!\n  upsertReview(input: ReviewInput!): Review! @aws_cognito_user_pools\n  recognizeBottle(imageKey: String!): Bottle @aws_cognito_user_pools\n  askChat(message: String!, history: String): String!\n  sendInvite(joinCode: String!, email: String, phone: String): Boolean! @aws_cognito_user_pools\n  sendRecap(email: String, phone: String, subject: String, html: String, text: String): Boolean! @aws_cognito_user_pools\n  presignUpload(bottleId: ID!, contentType: String!): UploadTarget! @aws_cognito_user_pools\n  setBottleImage(bottleId: ID!, imageUrl: String!): Bottle! @aws_cognito_user_pools\n  moderateReview(bottleId: ID!, userId: ID!): ModerationResult! @aws_cognito_user_pools\n  setReviewModeration(bottleId: ID!, userId: ID!, decision: String!): Review! @aws_cognito_user_pools\n  adminUserAction(username: String!, action: String!, value: String): Boolean! @aws_cognito_user_pools\n  saveMyProfile(input: ProfileInput!): UserProfile! @aws_cognito_user_pools\n  saveMyFlight(input: FlightInput!): Flight! @aws_cognito_user_pools\n  deleteMyFlight(id: String!): Boolean! @aws_cognito_user_pools\n  adminPatchBottle(id: ID!, patch: BottlePatch!): Bottle! @aws_cognito_user_pools\n  adminDeleteBottle(id: ID!): Boolean! @aws_cognito_user_pools\n  saveMyTasting(input: TastingEntryInput!): TastingEntry! @aws_cognito_user_pools\n  deleteMyTasting(id: String!): Boolean! @aws_cognito_user_pools\n  setFavorite(bottleId: String!, favorited: Boolean!): Boolean! @aws_cognito_user_pools\n  setShelf(bottleId: ID!, status: String): Boolean! @aws_cognito_user_pools\n  savePushSub(subscription: String!): Boolean! @aws_cognito_user_pools\n  removePushSub(endpoint: String!): Boolean! @aws_cognito_user_pools\n  adminTestPush: Boolean! @aws_cognito_user_pools\n  saveMyReminder(input: ReminderInput!): Reminder! @aws_cognito_user_pools\n  deleteMyReminder(id: String!): Boolean! @aws_cognito_user_pools\n}\n\ntype Subscription {\n  onSessionAdvanced(sessionId: ID!): TastingSession\n    @aws_subscribe(mutations: [\"advanceSession\"])\n  onParticipantJoined(sessionId: ID!): Participant\n    @aws_subscribe(mutations: [\"joinSession\"])\n  onRatingSubmitted(sessionId: ID!): Rating\n    @aws_subscribe(mutations: [\"submitRating\"])\n}\n"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Schema"
+   }
+  },
+  "ApiDefaultApiKeyF991C37B": {
+   "Type": "AWS::AppSync::ApiKey",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "Expires": 1812993628
+   },
+   "DependsOn": [
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/DefaultApiKey"
+   }
+  },
+  "ApiApiDsServiceRole29433E17": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/ApiDs/ServiceRole/Resource"
+   }
+  },
+  "ApiApiDsServiceRoleDefaultPolicy8B17133F": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "ApiFnE0725F78",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "ApiFnE0725F78",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiApiDsServiceRoleDefaultPolicy8B17133F",
+    "Roles": [
+     {
+      "Ref": "ApiApiDsServiceRole29433E17"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/ApiDs/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "ApiApiDs81D2B249": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "LambdaConfig": {
+     "LambdaFunctionArn": {
+      "Fn::GetAtt": [
+       "ApiFnE0725F78",
+       "Arn"
+      ]
+     }
+    },
+    "Name": "ApiDs",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "ApiApiDsServiceRole29433E17",
+      "Arn"
+     ]
+    },
+    "Type": "AWS_LAMBDA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/ApiDs/Resource"
+   }
+  },
+  "ApiQuerylistBottlesFCB4937C": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "listBottles",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_listBottles/Resource"
+   }
+  },
+  "ApiQuerybottlePopularity895DA939": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "bottlePopularity",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_bottlePopularity/Resource"
+   }
+  },
+  "ApiQuerygetBottleFFEC97D3": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "getBottle",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_getBottle/Resource"
+   }
+  },
+  "ApiQuerygetScanResultF7AD878D": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "getScanResult",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_getScanResult/Resource"
+   }
+  },
+  "ApiQuerylistFlights3C62F5BC": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "listFlights",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_listFlights/Resource"
+   }
+  },
+  "ApiQuerygetSessionFE10565A": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "getSession",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_getSession/Resource"
+   }
+  },
+  "ApiQuerylistParticipants432E94D2": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "listParticipants",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_listParticipants/Resource"
+   }
+  },
+  "ApiQuerylistRatingsA877E9F6": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "listRatings",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_listRatings/Resource"
+   }
+  },
+  "ApiQuerylistReviews0239F7DF": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "listReviews",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_listReviews/Resource"
+   }
+  },
+  "ApiQueryleaderboard93A48200": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "leaderboard",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_leaderboard/Resource"
+   }
+  },
+  "ApiQuerylistPendingReviewsDEF100F9": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "listPendingReviews",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_listPendingReviews/Resource"
+   }
+  },
+  "ApiQuerygetMyProfile079D243D": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "getMyProfile",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_getMyProfile/Resource"
+   }
+  },
+  "ApiQuerylistMyFlights3E2EB67C": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "listMyFlights",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_listMyFlights/Resource"
+   }
+  },
+  "ApiQuerylistMyHistory53EA6415": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "listMyHistory",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_listMyHistory/Resource"
+   }
+  },
+  "ApiQuerylistMyFavorites46BB103E": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "listMyFavorites",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_listMyFavorites/Resource"
+   }
+  },
+  "ApiQuerylistMyShelf86588898": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "listMyShelf",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_listMyShelf/Resource"
+   }
+  },
+  "ApiQuerylistMyRemindersD6FE9CED": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "listMyReminders",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_listMyReminders/Resource"
+   }
+  },
+  "ApiQueryadminAnalyticsC593DA2C": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "adminAnalytics",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_adminAnalytics/Resource"
+   }
+  },
+  "ApiQueryadminAlarms30943D3D": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "adminAlarms",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_adminAlarms/Resource"
+   }
+  },
+  "ApiQueryadminAiUsage6EF47DFC": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "adminAiUsage",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_adminAiUsage/Resource"
+   }
+  },
+  "ApiQueryadminPageViews313978E5": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "adminPageViews",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_adminPageViews/Resource"
+   }
+  },
+  "ApiMutationstartSessionA3A69558": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "startSession",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_startSession/Resource"
+   }
+  },
+  "ApiMutationadvanceSession2A134BED": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "advanceSession",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_advanceSession/Resource"
+   }
+  },
+  "ApiMutationjoinSession0F1C3554": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "joinSession",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_joinSession/Resource"
+   }
+  },
+  "ApiMutationsubmitRating8F75F376": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "submitRating",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_submitRating/Resource"
+   }
+  },
+  "ApiMutationanswerQuiz16DD7902": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "answerQuiz",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_answerQuiz/Resource"
+   }
+  },
+  "ApiMutationupsertReviewE930CFA8": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "upsertReview",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_upsertReview/Resource"
+   }
+  },
+  "ApiMutationrecognizeBottleB22B9793": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "recognizeBottle",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_recognizeBottle/Resource"
+   }
+  },
+  "ApiMutationpresignUploadBEE1CC6A": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "presignUpload",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_presignUpload/Resource"
+   }
+  },
+  "ApiMutationsetBottleImageA39B9BE2": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "setBottleImage",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_setBottleImage/Resource"
+   }
+  },
+  "ApiMutationsetReviewModeration2AAE4EBA": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "setReviewModeration",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_setReviewModeration/Resource"
+   }
+  },
+  "ApiMutationsaveMyProfile4897CD42": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "saveMyProfile",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_saveMyProfile/Resource"
+   }
+  },
+  "ApiMutationsaveMyFlight9F5B5599": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "saveMyFlight",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_saveMyFlight/Resource"
+   }
+  },
+  "ApiMutationdeleteMyFlightB6563036": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "deleteMyFlight",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_deleteMyFlight/Resource"
+   }
+  },
+  "ApiMutationadminPatchBottleB9E15D23": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "adminPatchBottle",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_adminPatchBottle/Resource"
+   }
+  },
+  "ApiMutationadminDeleteBottle7566A0E4": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "adminDeleteBottle",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_adminDeleteBottle/Resource"
+   }
+  },
+  "ApiMutationsaveMyTastingD6F8414E": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "saveMyTasting",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_saveMyTasting/Resource"
+   }
+  },
+  "ApiMutationdeleteMyTasting584C5E03": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "deleteMyTasting",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_deleteMyTasting/Resource"
+   }
+  },
+  "ApiMutationsetFavoriteDD1705D8": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "setFavorite",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_setFavorite/Resource"
+   }
+  },
+  "ApiMutationsetShelfE6D65363": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "setShelf",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_setShelf/Resource"
+   }
+  },
+  "ApiMutationsavePushSubAA373225": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "savePushSub",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_savePushSub/Resource"
+   }
+  },
+  "ApiMutationremovePushSubAB7DC757": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "removePushSub",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_removePushSub/Resource"
+   }
+  },
+  "ApiMutationadminTestPushA77A8498": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "adminTestPush",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_adminTestPush/Resource"
+   }
+  },
+  "ApiMutationsaveMyReminder6890E91C": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "saveMyReminder",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_saveMyReminder/Resource"
+   }
+  },
+  "ApiMutationdeleteMyReminderA35BBBC7": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "deleteMyReminder",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_deleteMyReminder/Resource"
+   }
+  },
+  "ApiMutationtrackDF06A732": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "track",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_track/Resource"
+   }
+  },
+  "ApiMutationsubmitFeedbackA05FE960": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ApiDs",
+    "FieldName": "submitFeedback",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiApiDs81D2B249",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_submitFeedback/Resource"
+   }
+  },
+  "ApiChatDsServiceRoleEAFD026D": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/ChatDs/ServiceRole/Resource"
+   }
+  },
+  "ApiChatDsServiceRoleDefaultPolicyA0DB4EBE": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "ChatFn5A5B3E47",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "ChatFn5A5B3E47",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiChatDsServiceRoleDefaultPolicyA0DB4EBE",
+    "Roles": [
+     {
+      "Ref": "ApiChatDsServiceRoleEAFD026D"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/ChatDs/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "ApiChatDs7E45D135": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "LambdaConfig": {
+     "LambdaFunctionArn": {
+      "Fn::GetAtt": [
+       "ChatFn5A5B3E47",
+       "Arn"
+      ]
+     }
+    },
+    "Name": "ChatDs",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "ApiChatDsServiceRoleEAFD026D",
+      "Arn"
+     ]
+    },
+    "Type": "AWS_LAMBDA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/ChatDs/Resource"
+   }
+  },
+  "ApiMutationaskChat2A417AA4": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ChatDs",
+    "FieldName": "askChat",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiChatDs7E45D135",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_askChat/Resource"
+   }
+  },
+  "ApiInviteDsServiceRole4612ACDA": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/InviteDs/ServiceRole/Resource"
+   }
+  },
+  "ApiInviteDsServiceRoleDefaultPolicyBC1AB0E7": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "InviteFn0D34862F",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "InviteFn0D34862F",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiInviteDsServiceRoleDefaultPolicyBC1AB0E7",
+    "Roles": [
+     {
+      "Ref": "ApiInviteDsServiceRole4612ACDA"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/InviteDs/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "ApiInviteDs7A8D1324": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "LambdaConfig": {
+     "LambdaFunctionArn": {
+      "Fn::GetAtt": [
+       "InviteFn0D34862F",
+       "Arn"
+      ]
+     }
+    },
+    "Name": "InviteDs",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "ApiInviteDsServiceRole4612ACDA",
+      "Arn"
+     ]
+    },
+    "Type": "AWS_LAMBDA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/InviteDs/Resource"
+   }
+  },
+  "ApiMutationsendInvite5C10F887": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "InviteDs",
+    "FieldName": "sendInvite",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiInviteDs7A8D1324",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_sendInvite/Resource"
+   }
+  },
+  "ApiMutationsendRecapAF4D6E9D": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "InviteDs",
+    "FieldName": "sendRecap",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiInviteDs7A8D1324",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_sendRecap/Resource"
+   }
+  },
+  "ApiModerateDsServiceRole0FE8260E": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/ModerateDs/ServiceRole/Resource"
+   }
+  },
+  "ApiModerateDsServiceRoleDefaultPolicy428ABB35": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "ModerateFn95D53F59",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "ModerateFn95D53F59",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiModerateDsServiceRoleDefaultPolicy428ABB35",
+    "Roles": [
+     {
+      "Ref": "ApiModerateDsServiceRole0FE8260E"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/ModerateDs/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "ApiModerateDs3DA2D315": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "LambdaConfig": {
+     "LambdaFunctionArn": {
+      "Fn::GetAtt": [
+       "ModerateFn95D53F59",
+       "Arn"
+      ]
+     }
+    },
+    "Name": "ModerateDs",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "ApiModerateDsServiceRole0FE8260E",
+      "Arn"
+     ]
+    },
+    "Type": "AWS_LAMBDA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/ModerateDs/Resource"
+   }
+  },
+  "ApiMutationmoderateReview965FA248": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "ModerateDs",
+    "FieldName": "moderateReview",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiModerateDs3DA2D315",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_moderateReview/Resource"
+   }
+  },
+  "ApiAdminDsServiceRoleE16852C6": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/AdminDs/ServiceRole/Resource"
+   }
+  },
+  "ApiAdminDsServiceRoleDefaultPolicy97AA343F": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "AdminApiFnA81506EE",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "AdminApiFnA81506EE",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiAdminDsServiceRoleDefaultPolicy97AA343F",
+    "Roles": [
+     {
+      "Ref": "ApiAdminDsServiceRoleE16852C6"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/AdminDs/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "ApiAdminDsF6DE0581": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "LambdaConfig": {
+     "LambdaFunctionArn": {
+      "Fn::GetAtt": [
+       "AdminApiFnA81506EE",
+       "Arn"
+      ]
+     }
+    },
+    "Name": "AdminDs",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "ApiAdminDsServiceRoleE16852C6",
+      "Arn"
+     ]
+    },
+    "Type": "AWS_LAMBDA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/AdminDs/Resource"
+   }
+  },
+  "ApiQueryadminListUsersE1D2BE2F": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "AdminDs",
+    "FieldName": "adminListUsers",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiAdminDsF6DE0581",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_adminListUsers/Resource"
+   }
+  },
+  "ApiQueryadminGetUserB5BA0CAB": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "AdminDs",
+    "FieldName": "adminGetUser",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiAdminDsF6DE0581",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_adminGetUser/Resource"
+   }
+  },
+  "ApiQueryadminAuditLog27B895FD": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "AdminDs",
+    "FieldName": "adminAuditLog",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiAdminDsF6DE0581",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_adminAuditLog/Resource"
+   }
+  },
+  "ApiQueryadminListFeedback4B0886DA": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "AdminDs",
+    "FieldName": "adminListFeedback",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiAdminDsF6DE0581",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_adminListFeedback/Resource"
+   }
+  },
+  "ApiMutationadminUserActionA2393D9F": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "AdminDs",
+    "FieldName": "adminUserAction",
+    "Kind": "UNIT",
+    "TypeName": "Mutation"
+   },
+   "DependsOn": [
+    "ApiAdminDsF6DE0581",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Mutation_adminUserAction/Resource"
+   }
+  },
+  "ApiCostDsServiceRoleBF98BE25": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/CostDs/ServiceRole/Resource"
+   }
+  },
+  "ApiCostDsServiceRoleDefaultPolicy364A5575": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "CostApiFnBFF278F5",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "CostApiFnBFF278F5",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiCostDsServiceRoleDefaultPolicy364A5575",
+    "Roles": [
+     {
+      "Ref": "ApiCostDsServiceRoleBF98BE25"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/CostDs/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "ApiCostDsD717B2C5": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "LambdaConfig": {
+     "LambdaFunctionArn": {
+      "Fn::GetAtt": [
+       "CostApiFnBFF278F5",
+       "Arn"
+      ]
+     }
+    },
+    "Name": "CostDs",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "ApiCostDsServiceRoleBF98BE25",
+      "Arn"
+     ]
+    },
+    "Type": "AWS_LAMBDA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/CostDs/Resource"
+   }
+  },
+  "ApiQueryadminCostsE291EA51": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "ApiId"
+     ]
+    },
+    "DataSourceName": "CostDs",
+    "FieldName": "adminCosts",
+    "Kind": "UNIT",
+    "TypeName": "Query"
+   },
+   "DependsOn": [
+    "ApiCostDsD717B2C5",
+    "ApiSchema510EECD7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Api/Query_adminCosts/Resource"
+   }
+  },
+  "ApiWaf": {
+   "Type": "AWS::WAFv2::WebACL",
+   "Properties": {
+    "DefaultAction": {
+     "Allow": {}
+    },
+    "Rules": [
+     {
+      "Action": {
+       "Block": {}
+      },
+      "Name": "ApiRateLimit",
+      "Priority": 1,
+      "Statement": {
+       "RateBasedStatement": {
+        "AggregateKeyType": "IP",
+        "Limit": 600
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "apiRate",
+       "SampledRequestsEnabled": true
+      }
+     }
+    ],
+    "Scope": "REGIONAL",
+    "VisibilityConfig": {
+     "CloudWatchMetricsEnabled": true,
+     "MetricName": "wineApi",
+     "SampledRequestsEnabled": true
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ApiWaf"
+   }
+  },
+  "ApiWafAssoc": {
+   "Type": "AWS::WAFv2::WebACLAssociation",
+   "Properties": {
+    "ResourceArn": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "Arn"
+     ]
+    },
+    "WebACLArn": {
+     "Fn::GetAtt": [
+      "ApiWaf",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ApiWafAssoc"
+   }
+  },
+  "Alarms04B5A0BF": {
+   "Type": "AWS::SNS::Topic",
+   "Properties": {
+    "DisplayName": "Wine Roam alarms"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/Alarms/Resource"
+   }
+  },
+  "ApiErrors8A265993": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Ref": "Alarms04B5A0BF"
+     }
+    ],
+    "AlarmName": "wine-api-errors",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "ApiFnE0725F78"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Threshold": 5,
+    "TreatMissingData": "notBreaching"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ApiErrors/Resource"
+   }
+  },
+  "EnrichErrors13688225": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Ref": "Alarms04B5A0BF"
+     }
+    ],
+    "AlarmName": "wine-enrich-errors",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "EnrichFn7A15B8A6"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 900,
+    "Statistic": "Sum",
+    "Threshold": 3,
+    "TreatMissingData": "notBreaching"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/EnrichErrors/Resource"
+   }
+  },
+  "ReminderErrorsD9178313": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Ref": "Alarms04B5A0BF"
+     }
+    ],
+    "AlarmName": "wine-reminder-errors",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "ReminderSweepFn284D39E6"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 900,
+    "Statistic": "Sum",
+    "Threshold": 2,
+    "TreatMissingData": "notBreaching"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ReminderErrors/Resource"
+   }
+  },
+  "ChatErrors1691951F": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Ref": "Alarms04B5A0BF"
+     }
+    ],
+    "AlarmName": "wine-chat-errors",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "ChatFn5A5B3E47"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 900,
+    "Statistic": "Sum",
+    "Threshold": 5,
+    "TreatMissingData": "notBreaching"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/ChatErrors/Resource"
+   }
+  },
+  "DynamoThrottlesA65D9268": {
+   "Type": "AWS::CloudWatch::Alarm",
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Ref": "Alarms04B5A0BF"
+     }
+    ],
+    "AlarmName": "wine-dynamodb-throttles",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "TableName",
+      "Value": {
+       "Ref": "TableCD117FA1"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "ThrottledRequests",
+    "Namespace": "AWS/DynamoDB",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/DynamoThrottles/Resource"
+   }
+  },
+  "MonthlyBudget": {
+   "Type": "AWS::Budgets::Budget",
+   "Properties": {
+    "Budget": {
+     "BudgetLimit": {
+      "Amount": 30,
+      "Unit": "USD"
+     },
+     "BudgetType": "COST",
+     "TimeUnit": "MONTHLY"
+    },
+    "NotificationsWithSubscribers": [
+     {
+      "Notification": {
+       "ComparisonOperator": "GREATER_THAN",
+       "NotificationType": "ACTUAL",
+       "Threshold": 80,
+       "ThresholdType": "PERCENTAGE"
+      },
+      "Subscribers": [
+       {
+        "Address": "bmchism@gmail.com",
+        "SubscriptionType": "EMAIL"
+       }
+      ]
+     },
+     {
+      "Notification": {
+       "ComparisonOperator": "GREATER_THAN",
+       "NotificationType": "ACTUAL",
+       "Threshold": 100,
+       "ThresholdType": "PERCENTAGE"
+      },
+      "Subscribers": [
+       {
+        "Address": "bmchism@gmail.com",
+        "SubscriptionType": "EMAIL"
+       }
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/MonthlyBudget"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/3VTwW7bMAz9lt5VrUjQw45ugnXDkjWLO+wY0DLjMLElTZQSBIL/fZDsNCnWAQb4HkXyESQ9kZPHz/LhDk58r+rDfUuVjKUHdRBw4k2szxo6U1cyvkLVophtdQa9YFQOPXegoUEnY5l5ChhQL5RpNHkj4y9GtzKmTY9v+ALmpgPSt0+j50JnLaH2twH/ep6dCbYXLXRVDTLOtnqFriNmMrn0l6CVJ6N7wVMZn4I6DK2OaDAr05I6X90jH8gTMPbiBNvjJNf/jVUxW4g3VDAbRTCIKHSetqTA49t8ZldfyrqhvVCtCfXWGe1lXCNboxm/ItTo+NrUxw9zYu+oCklYlNMXRw3pQilknhnt3TD1/7hvk3vhTPD4OJWxWKMyrh5EEyrTOofhbrSpcc/yRzaXuQqCTsa1GS4k22vjA0qj3wAzepZFMgKPqD3LuA5jWsh35dFux7K88cAHloss/U0fzQHfB+Rj9bgEtSOdq7zjS7C9AGv5rJWMzw7s7k9bWEqBmf1cvGel2mEHyVFY+o5nMUjPwUNpglNZ4oatkU17RDcuKONecGrs1VhS+YdJYFzyCbzayVi04LqskkAvqlA3aTD59hLsc+WL4EvwNuSDXYK1pBuRJ1h6aEg3vUg7kXv+dJw8yPTd7Zno3gXtqUO5Huxfuwee5usDAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "WineStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "CognitoAuthDomain": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "UserPoolAuthDomain95EAFE2A"
+      },
+      ".auth.us-east-1.amazoncognito.com"
+     ]
+    ]
+   }
+  },
+  "GoogleOAuthSecretName": {
+   "Value": {
+    "Fn::Join": [
+     "-",
+     [
+      {
+       "Fn::Select": [
+        0,
+        {
+         "Fn::Split": [
+          "-",
+          {
+           "Fn::Select": [
+            6,
+            {
+             "Fn::Split": [
+              ":",
+              {
+               "Ref": "GoogleOAuthSecret963EF6DE"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "Fn::Select": [
+        1,
+        {
+         "Fn::Split": [
+          "-",
+          {
+           "Fn::Select": [
+            6,
+            {
+             "Fn::Split": [
+              ":",
+              {
+               "Ref": "GoogleOAuthSecret963EF6DE"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    ]
+   }
+  },
+  "AppleOAuthSecretName": {
+   "Value": {
+    "Fn::Join": [
+     "-",
+     [
+      {
+       "Fn::Select": [
+        0,
+        {
+         "Fn::Split": [
+          "-",
+          {
+           "Fn::Select": [
+            6,
+            {
+             "Fn::Split": [
+              ":",
+              {
+               "Ref": "AppleOAuthSecretEFC33D7D"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "Fn::Select": [
+        1,
+        {
+         "Fn::Split": [
+          "-",
+          {
+           "Fn::Select": [
+            6,
+            {
+             "Fn::Split": [
+              ":",
+              {
+               "Ref": "AppleOAuthSecretEFC33D7D"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    ]
+   }
+  },
+  "GraphQLUrl": {
+   "Value": {
+    "Fn::GetAtt": [
+     "ApiF70053CD",
+     "GraphQLUrl"
+    ]
+   }
+  },
+  "GraphQLApiId": {
+   "Value": {
+    "Fn::GetAtt": [
+     "ApiF70053CD",
+     "ApiId"
+    ]
+   }
+  },
+  "GraphQLApiKey": {
+   "Value": {
+    "Fn::GetAtt": [
+     "ApiDefaultApiKeyF991C37B",
+     "ApiKey"
+    ]
+   }
+  },
+  "UserPoolId": {
+   "Value": {
+    "Ref": "UserPool6BA7E5F2"
+   }
+  },
+  "UserPoolClientId": {
+   "Value": {
+    "Ref": "UserPoolWebClient4C9370B0"
+   }
+  },
+  "UploadsBucket": {
+   "Value": {
+    "Ref": "Uploads4F6EB0FD"
+   }
+  },
+  "SiteBucketName": {
+   "Value": {
+    "Ref": "SiteBucket397A1860"
+   }
+  },
+  "CloudFrontDomain": {
+   "Value": {
+    "Fn::GetAtt": [
+     "CDN2330F4C0",
+     "DomainName"
+    ]
+   }
+  },
+  "PrewarmStateMachine": {
+   "Value": {
+    "Ref": "PrewarmBatchA674E2B5"
+   }
+  },
+  "CostFnName": {
+   "Value": {
+    "Ref": "CostApiFnBFF278F5"
+   }
+  },
+  "AdminFnName": {
+   "Value": {
+    "Ref": "AdminApiFnA81506EE"
+   }
+  },
+  "IntegrationsFnName": {
+   "Value": {
+    "Ref": "IntegrationsFnEDD6C259"
+   }
+  },
+  "QuizFnName": {
+   "Value": {
+    "Ref": "QuizGenerateFn7A09FDDD"
+   }
+  },
+  "ResendSecretArn": {
+   "Value": {
+    "Ref": "ResendKeyC31F0A1B"
+   }
+  },
+  "TwilioSecretArn": {
+   "Value": {
+    "Ref": "TwilioKey60B9DE36"
+   }
+  }
+ },
+ "Mappings": {
+  "AWSCloudFrontPartitionHostedZoneIdMap": {
+   "aws": {
+    "zoneId": "Z2FDTNDATAQYW2"
+   },
+   "aws-cn": {
+    "zoneId": "Z3RFFRIM2A3IF5"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

@@ -16,7 +16,7 @@ const ACTIONS = [
   { to: "/learn", title: "Learn the Basics", sub: "Wine 101", Icon: BookIcon, c: "#9AA7B2", c2: "#6b7a85" },
 ];
 
-const HERO = "https://commons.wikimedia.org/wiki/Special:FilePath/Vignoble_de_Lavaux_en_automne.jpg?width=1000";
+const HERO = "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=1000&q=80&auto=format";
 
 export default function Home() {
   const { user } = useAuth();
@@ -32,7 +32,7 @@ export default function Home() {
         {/* Photo hero with greeting */}
         <motion.div className="home-hero" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
           <div className="home-hero-photo">
-            <img src={HERO} alt="Terraced vineyards at sunset" loading="eager" referrerPolicy="no-referrer"
+            <img src={HERO} alt="Vineyard rows at golden hour" loading="eager"
               onError={(e) => { (e.currentTarget.closest(".home-hero-photo") as HTMLElement)?.classList.add("noimg"); }} />
           </div>
           <div className="home-hero-text">

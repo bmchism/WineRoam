@@ -24,12 +24,12 @@ export interface ProcessStage {
 }
 
 const WM = (file: string, width = 800) =>
-  `https://commons.wikimedia.org/wiki/Special:FilePath/${file}?width=${width}`;
+  `https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=${width}&q=80&auto=format`;
 
 export const PHOTOS = {
-  vineyard: WM("Vignoble_de_Lavaux_en_automne.jpg"),
-  harvest: WM("Grape_harvest_in_Napa_Valley.jpg"),
-  barrels: WM("Wine_barrels_in_cellar.jpg"),
+  vineyard: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=800&q=80&auto=format",
+  harvest: "https://images.unsplash.com/photo-1596142813892-193da6b3d34c?w=800&q=80&auto=format",
+  barrels: "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?w=800&q=80&auto=format",
 };
 
 export const stages: ProcessStage[] = [
@@ -41,7 +41,7 @@ export const stages: ProcessStage[] = [
     body: "Everything starts in the vineyard. The concept of 'terroir' — the unique combination of soil, climate, altitude, and aspect — shapes the character of the wine before the winemaker even touches the grapes. Limestone gives minerality, clay adds richness, sand produces finesse. Cool climates preserve acidity; warm ones build ripeness and body.",
     facts: ["Terroir = soil + climate + aspect", "Vine age matters (old vines = concentrated)", "Pruning controls yield and quality"],
     accent: "#5c7a5a",
-    photo: WM("Vignoble_de_Lavaux_en_automne.jpg"),
+    photo: PHOTOS.vineyard,
     credit: "Photo: Wikimedia Commons (CC)",
   },
   {

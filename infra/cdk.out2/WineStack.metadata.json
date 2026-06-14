@@ -1,0 +1,2830 @@
+{
+  "/WineStack": [
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/CognitoAuthDomain": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CognitoAuthDomain"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:199:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/GoogleOAuthSecretName": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GoogleOAuthSecretName"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:200:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/AppleOAuthSecretName": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AppleOAuthSecretName"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:201:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/AdminGroup": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AdminGroup"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:203:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/WebAcl": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "WebAcl"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:236:20)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/AWSCloudFrontPartitionHostedZoneIdMap": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AWSCloudFrontPartitionHostedZoneIdMap"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new ARecord2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:333:7)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ApiWaf": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiWaf"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:612:20)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ApiWafAssoc": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiWafAssoc"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:626:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/MonthlyBudget": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "MonthlyBudget"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:668:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/GraphQLUrl": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GraphQLUrl"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:688:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/GraphQLApiId": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GraphQLApiId"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:689:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/GraphQLApiKey": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GraphQLApiKey"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:690:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/UserPoolId": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "UserPoolId"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:691:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/UserPoolClientId": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "UserPoolClientId"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:692:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/UploadsBucket": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "UploadsBucket"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:693:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/SiteBucketName": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SiteBucketName"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:694:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/CloudFrontDomain": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CloudFrontDomain"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:695:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/PrewarmStateMachine": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PrewarmStateMachine"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:696:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/CostFnName": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CostFnName"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:697:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/AdminFnName": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AdminFnName"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:698:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/IntegrationsFnName": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "IntegrationsFnName"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:699:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/QuizFnName": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "QuizFnName"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:700:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ResendSecretArn": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ResendSecretArn"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:701:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/TwilioSecretArn": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "TwilioSecretArn"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:702:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/BootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BootstrapVersion"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/CheckBootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CheckBootstrapVersion"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/Table/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "TableCD117FA1"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Table2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:49:19)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/AnthropicKey/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AnthropicKeyF3EE8375"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Secret2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:63:29)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/AnthropicAdminKey/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AnthropicAdminKeyF0ADD8E2"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Secret2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:66:34)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/VapidKey/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "VapidKey5C6447C5"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Secret2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:69:25)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ResendKey/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ResendKeyC31F0A1B"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Secret2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:73:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/TwilioKey/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "TwilioKey60B9DE36"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Secret2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:76:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/UserPool/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "UserPool6BA7E5F2"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new UserPool2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:106:22)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/UserPool/PostAuthenticationCognito": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "UserPoolPostAuthenticationCognito62FAB912"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.<anonymous> in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:434:14)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/GoogleOAuthSecret/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "GoogleOAuthSecret963EF6DE"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Secret2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:135:31)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/AppleOAuthSecret/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AppleOAuthSecretEFC33D7D"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Secret2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:138:30)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Uploads/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "Uploads4F6EB0FD"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Bucket2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:210:21)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/SiteBucket/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SiteBucket397A1860"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Bucket2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:228:18)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Cert/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "Cert5C9FAEC1"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Certificate2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:287:21)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/SecHeaders/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SecHeaders811FD6AC"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new ResponseHeadersPolicy2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:294:29)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/CDN/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CDN2330F4C0"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Distribution2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:303:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/AliasRecord/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AliasRecord851000D2"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new ARecord2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:333:7)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ApiFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiFnE0725F78"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:366:19)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/EnrichFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EnrichFn7A15B8A6"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:367:22)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/RecognizeFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "RecognizeFn60724AE1"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:371:25)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/IntegrationsFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "IntegrationsFnEDD6C259"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:372:28)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/QuizGenerateFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "QuizGenerateFn7A09FDDD"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:373:20)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/AdminApiFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AdminApiFnA81506EE"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:376:21)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/AuthEventsFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AuthEventsFn22FCDEF4"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:379:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/CostApiFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CostApiFnBFF278F5"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:382:20)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ChatFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ChatFn5A5B3E47"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:383:20)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/InviteFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "InviteFn0D34862F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:384:22)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ReminderSweepFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ReminderSweepFn284D39E6"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:385:24)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ModerateFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ModerateFn95D53F59"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:386:24)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/PrewarmListFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PrewarmListFn93BB353C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:387:27)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/PrewarmOneFn/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PrewarmOneFn7D3E5079"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:388:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ReminderSweepSchedule/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ReminderSweepScheduleF5A9169B"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Rule2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:415:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ReminderSweepSchedule/AllowEventRuleWineStackReminderSweepFnDD3D2A4B": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ReminderSweepScheduleAllowEventRuleWineStackReminderSweepFnDD3D2A4B4F277069"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Rule2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:415:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)"
+      ]
+    }
+  ],
+  "/WineStack/BottlePipeline/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BottlePipeline9FACFD73"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new StateMachine2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:471:22)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/PrewarmBatch/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PrewarmBatchA674E2B5"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new StateMachine2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:496:21)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiF70053CD"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new GraphqlApi2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:510:17)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Schema": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiSchema510EECD7"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new GraphqlApi2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:510:17)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/DefaultApiKey": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiDefaultApiKeyF991C37B"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new GraphqlApi2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:510:17)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Alarms/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "Alarms04B5A0BF"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Topic2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:632:24)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ApiErrors/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiErrors8A265993"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Alarm2 in aws-cdk-lib...",
+        "errAlarm (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:638:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:647:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/EnrichErrors/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EnrichErrors13688225"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Alarm2 in aws-cdk-lib...",
+        "errAlarm (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:638:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:648:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ReminderErrors/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ReminderErrorsD9178313"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Alarm2 in aws-cdk-lib...",
+        "errAlarm (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:638:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:649:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ChatErrors/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ChatErrors1691951F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Alarm2 in aws-cdk-lib...",
+        "errAlarm (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:638:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:650:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/DynamoThrottles/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "DynamoThrottlesA65D9268"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Alarm2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:652:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/CDKMetadata/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CDKMetadata"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...App.synth in aws-cdk-lib...",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:23:5)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/WineStack/UserPool/AuthDomain/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "UserPoolAuthDomain95EAFE2A"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addDomain in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:129:33)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/UserPool/WebClient/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "UserPoolWebClient4C9370B0"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addClient in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:182:37)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Uploads/Policy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "UploadsPolicy148F8199"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Bucket2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:210:21)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)"
+      ]
+    }
+  ],
+  "/WineStack/SiteBucket/Policy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SiteBucketPolicy3AC1D0F8"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Bucket2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:228:18)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)"
+      ]
+    }
+  ],
+  "/WineStack/ApiFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiFnServiceRoleD18AAE0E"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:366:19)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/EnrichFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EnrichFnServiceRole0AE88237"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:367:22)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/RecognizeFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "RecognizeFnServiceRole4684AE5F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:371:25)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/IntegrationsFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "IntegrationsFnServiceRole22799EA4"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:372:28)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/QuizGenerateFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "QuizGenerateFnServiceRole9F3B2381"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:373:20)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/AdminApiFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AdminApiFnServiceRole3DBF280A"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:376:21)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/AuthEventsFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AuthEventsFnServiceRole50DD14C8"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:379:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/CostApiFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CostApiFnServiceRole292E0961"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:382:20)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ChatFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ChatFnServiceRoleC3825F1B"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:383:20)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/InviteFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "InviteFnServiceRoleCB8D788F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:384:22)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ReminderSweepFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ReminderSweepFnServiceRoleEA4DD303"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:385:24)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/ModerateFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ModerateFnServiceRoleF9310F89"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:386:24)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/PrewarmListFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PrewarmListFnServiceRole24E621A4"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:387:27)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/PrewarmOneFn/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PrewarmOneFnServiceRole933797B6"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in aws-cdk-lib...",
+        "makeFn (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:353:7)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:388:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/BottlePipeline/Role/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BottlePipelineRole4C389FBB"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new StateMachine2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:471:22)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/PrewarmBatch/Role/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PrewarmBatchRole1C6F277D"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new StateMachine2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:496:21)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/ApiDs/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiApiDs81D2B249"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addLambdaDataSource in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:533:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_listBottles/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerylistBottlesFCB4937C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_bottlePopularity/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerybottlePopularity895DA939"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_getBottle/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerygetBottleFFEC97D3"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_getScanResult/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerygetScanResultF7AD878D"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_listFlights/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerylistFlights3C62F5BC"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_getSession/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerygetSessionFE10565A"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_listParticipants/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerylistParticipants432E94D2"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_listRatings/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerylistRatingsA877E9F6"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_listReviews/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerylistReviews0239F7DF"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_leaderboard/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQueryleaderboard93A48200"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_listPendingReviews/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerylistPendingReviewsDEF100F9"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_getMyProfile/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerygetMyProfile079D243D"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_listMyFlights/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerylistMyFlights3E2EB67C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_listMyHistory/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerylistMyHistory53EA6415"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_listMyFavorites/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerylistMyFavorites46BB103E"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_listMyShelf/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerylistMyShelf86588898"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_listMyReminders/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQuerylistMyRemindersD6FE9CED"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_adminAnalytics/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQueryadminAnalyticsC593DA2C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_adminAlarms/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQueryadminAlarms30943D3D"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_adminAiUsage/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQueryadminAiUsage6EF47DFC"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_adminPageViews/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQueryadminPageViews313978E5"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:538:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_startSession/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationstartSessionA3A69558"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_advanceSession/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationadvanceSession2A134BED"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_joinSession/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationjoinSession0F1C3554"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_submitRating/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsubmitRating8F75F376"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_answerQuiz/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationanswerQuiz16DD7902"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_upsertReview/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationupsertReviewE930CFA8"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_recognizeBottle/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationrecognizeBottleB22B9793"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_presignUpload/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationpresignUploadBEE1CC6A"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_setBottleImage/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsetBottleImageA39B9BE2"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_setReviewModeration/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsetReviewModeration2AAE4EBA"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_saveMyProfile/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsaveMyProfile4897CD42"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_saveMyFlight/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsaveMyFlight9F5B5599"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_deleteMyFlight/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationdeleteMyFlightB6563036"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_adminPatchBottle/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationadminPatchBottleB9E15D23"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_adminDeleteBottle/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationadminDeleteBottle7566A0E4"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_saveMyTasting/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsaveMyTastingD6F8414E"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_deleteMyTasting/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationdeleteMyTasting584C5E03"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_setFavorite/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsetFavoriteDD1705D8"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_setShelf/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsetShelfE6D65363"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_savePushSub/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsavePushSubAA373225"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_removePushSub/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationremovePushSubAB7DC757"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_adminTestPush/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationadminTestPushA77A8498"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_saveMyReminder/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsaveMyReminder6890E91C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_deleteMyReminder/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationdeleteMyReminderA35BBBC7"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_track/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationtrackDF06A732"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_submitFeedback/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsubmitFeedbackA05FE960"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536: (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:536:1)",
+        "Array.forEach (:)",
+        "wire (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:535:14)",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:561:5)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/ChatDs/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiChatDs7E45D135"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addLambdaDataSource in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:591:24)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_askChat/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationaskChat2A417AA4"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:592:12)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/InviteDs/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiInviteDs7A8D1324"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addLambdaDataSource in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:594:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_sendInvite/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsendInvite5C10F887"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:595:14)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_sendRecap/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationsendRecapAF4D6E9D"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:596:14)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/ModerateDs/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiModerateDs3DA2D315"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addLambdaDataSource in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:598:28)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_moderateReview/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationmoderateReview965FA248"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:599:16)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/AdminDs/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiAdminDsF6DE0581"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addLambdaDataSource in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:601:25)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_adminListUsers/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQueryadminListUsersE1D2BE2F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:602:13)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_adminGetUser/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQueryadminGetUserB5BA0CAB"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:603:13)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_adminAuditLog/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQueryadminAuditLog27B895FD"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:604:13)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_adminListFeedback/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQueryadminListFeedback4B0886DA"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:605:13)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Mutation_adminUserAction/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiMutationadminUserActionA2393D9F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:606:13)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/CostDs/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiCostDsD717B2C5"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addLambdaDataSource in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:608:24)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/Api/Query_adminCosts/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiQueryadminCostsE291EA51"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.createResolver in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:609:12)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/WineStack/CDN/Origin1/S3OriginAccessControl/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CDNOrigin1S3OriginAccessControl79AEF565"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Distribution2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:303:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/WineStack/CDN/Origin2/S3OriginAccessControl/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CDNOrigin2S3OriginAccessControl5E5793F7"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        ".../Users/keelychism/Desktop/WineRoam2/infra/node_modules/aws-cdk-lib/aws-cloudfront/lib/distribution.js:1:148 in aws-cdk-lib...",
+        "Array.forEach (:)",
+        "...aws-cdk-lib..."
+      ]
+    }
+  ],
+  "/WineStack/ApiFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiFnServiceRoleDefaultPolicy56A1E6E5"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/EnrichFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EnrichFnServiceRoleDefaultPolicyE339B184"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/RecognizeFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "RecognizeFnServiceRoleDefaultPolicy20236D08"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/QuizGenerateFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "QuizGenerateFnServiceRoleDefaultPolicyF6D8D490"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/AdminApiFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AdminApiFnServiceRoleDefaultPolicyABBE8083"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/AuthEventsFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AuthEventsFnServiceRoleDefaultPolicy8FFEED9C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/CostApiFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CostApiFnServiceRoleDefaultPolicyE20ED08D"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.grantRead in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:419:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)"
+      ]
+    }
+  ],
+  "/WineStack/ChatFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ChatFnServiceRoleDefaultPolicyD5F3AC4B"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.grantRead in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:401:21)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)"
+      ]
+    }
+  ],
+  "/WineStack/InviteFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "InviteFnServiceRoleDefaultPolicyED4B530C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.grantRead in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:405:18)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)"
+      ]
+    }
+  ],
+  "/WineStack/ReminderSweepFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ReminderSweepFnServiceRoleDefaultPolicy08ACE7C2"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/ModerateFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ModerateFnServiceRoleDefaultPolicy2BC68804"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/PrewarmOneFn/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PrewarmOneFnServiceRoleDefaultPolicy8443C1BC"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/BottlePipeline/Role/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BottlePipelineRoleDefaultPolicy24EC58BB"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new StateMachine2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:471:22)"
+      ]
+    }
+  ],
+  "/WineStack/PrewarmBatch/Role/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PrewarmBatchRoleDefaultPolicyE3ACE745"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new StateMachine2 in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:496:21)"
+      ]
+    }
+  ],
+  "/WineStack/Api/ApiDs/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiApiDsServiceRole29433E17"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addLambdaDataSource in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:533:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/WineStack/Api/ChatDs/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiChatDsServiceRoleEAFD026D"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addLambdaDataSource in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:591:24)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/WineStack/Api/InviteDs/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiInviteDsServiceRole4612ACDA"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addLambdaDataSource in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:594:26)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/WineStack/Api/ModerateDs/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiModerateDsServiceRole0FE8260E"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addLambdaDataSource in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:598:28)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/WineStack/Api/AdminDs/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiAdminDsServiceRoleE16852C6"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addLambdaDataSource in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:601:25)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/WineStack/Api/CostDs/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiCostDsServiceRoleBF98BE25"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.addLambdaDataSource in aws-cdk-lib...",
+        "new WineStack (/Users/keelychism/Desktop/WineRoam2/infra/lib/wine-stack.ts:608:24)",
+        "<anonymous> (/Users/keelychism/Desktop/WineRoam2/infra/bin/wine.ts:12:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/WineStack/Api/ApiDs/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiApiDsServiceRoleDefaultPolicy8B17133F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/Api/ChatDs/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiChatDsServiceRoleDefaultPolicyA0DB4EBE"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/Api/InviteDs/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiInviteDsServiceRoleDefaultPolicyBC1AB0E7"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/Api/ModerateDs/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiModerateDsServiceRoleDefaultPolicy428ABB35"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/Api/AdminDs/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiAdminDsServiceRoleDefaultPolicy97AA343F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/WineStack/Api/CostDs/ServiceRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ApiCostDsServiceRoleDefaultPolicy364A5575"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ]
+}
