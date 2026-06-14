@@ -38,6 +38,7 @@ interface WineStackProps extends StackProps {
 }
 
 const FN_ROOT = path.join(__dirname, "..", "..", "functions", "src");
+const PROJECT_ROOT = path.join(__dirname, "..", "..");
 
 export class WineStack extends Stack {
   constructor(scope: Construct, id: string, props: WineStackProps) {
@@ -93,6 +94,8 @@ export class WineStack extends Stack {
         timeout: Duration.seconds(15),
         memorySize: 256,
         environment: { KMS_KEY_ARN: emailKey.keyArn, RESEND_SECRET_ARN: resendSecret.secretArn },
+        projectRoot: PROJECT_ROOT,
+        depsLockFilePath: path.join(PROJECT_ROOT, "package-lock.json"),
         bundling: { externalModules: ["@aws-sdk/*"] },
       });
       emailKey.grantDecrypt(cognitoEmailFn);
@@ -354,8 +357,8 @@ export class WineStack extends Stack {
         timeout: Duration.seconds(30),
         memorySize: 256,
         environment: commonEnv,
-        // CommonJS output (default): avoids "Dynamic require of 'stream'" from
-        // CJS deps (node-fetch via the Anthropic SDK) that break under ESM output.
+        projectRoot: PROJECT_ROOT,
+        depsLockFilePath: path.join(PROJECT_ROOT, "package-lock.json"),
         bundling: { externalModules: ["@aws-sdk/*"] },
         ...opts,
       });

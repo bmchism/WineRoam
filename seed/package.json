@@ -1,5 +1,5 @@
 {
-  "name": "@wine-roam/seed",
+  "name": "@agave/seed",
   "version": "0.1.0",
   "private": true,
   "type": "module",

@@ -1,0 +1,19 @@
+{
+  "name": "wine-roam",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Wine Roam — wine tasting PWA + serverless backend (monorepo)",
+  "workspaces": [
+    "shared",
+    "seed",
+    "web",
+    "functions",
+    "infra"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w web",
+    "build:web": "npm run build -w web",
+    "typecheck": "npm run typecheck -w shared && npm run typecheck -w functions && npm run build -w web",
+    "synth": "npm run synth -w infra"
+  }
+}
