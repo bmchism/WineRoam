@@ -1045,7 +1045,6 @@ const CATALOG: ProducerRow[] = [
     { name: "Grüner Veltliner Lamm", type: W, region: "Kamptal" },
     { name: "Riesling Heiligenstein", type: W, region: "Kamptal" },
   ]},
-];
 
   // ========== USA: EVERYDAY & VALUE ($10-40) ==========
   { producer: "Apothic", country: "USA", wines: [
@@ -1498,17 +1497,6 @@ const CATALOG: ProducerRow[] = [
     { name: "Saperavi", type: R, region: "Kakheti" },
   ]},
 
-export const topWines: TopWineSeed[] = CATALOG.flatMap((row) =>
-  row.wines.map((w) => ({
-    producer: row.producer,
-    name: w.name,
-    wineType: w.type,
-    region: w.region,
-    country: row.country,
-  }))
-);
-
-export const TOP_COUNT = topWines.length;
 
   // ========== USA: MID-RANGE CALIFORNIA ($20-60) ==========
   { producer: "Stags' Leap Winery", country: "USA", wines: [{ name: "Cabernet Sauvignon Napa", type: R, region: "Napa Valley" }, { name: "Petite Sirah", type: R, region: "Napa Valley" }, { name: "Merlot", type: R, region: "Napa Valley" }]},
@@ -1620,7 +1608,7 @@ export const TOP_COUNT = topWines.length;
   { producer: "Hamilton Russell", country: "South Africa", wines: [{ name: "Pinot Noir", type: R, region: "Hemel-en-Aarde Valley" }, { name: "Chardonnay", type: W, region: "Hemel-en-Aarde Valley" }]},
   { producer: "Vergelegen", country: "South Africa", wines: [{ name: "V Cabernet Sauvignon", type: R, region: "Stellenbosch" }, { name: "Reserve Chardonnay", type: W, region: "Stellenbosch" }]},
   { producer: "Thelema", country: "South Africa", wines: [{ name: "Cabernet Sauvignon", type: R, region: "Stellenbosch" }, { name: "The Mint Cabernet", type: R, region: "Stellenbosch" }, { name: "Chardonnay", type: W, region: "Stellenbosch" }]},
-];
+
 
   // ========== POPULAR US WINES ($10-30 retail) ==========
   { producer: "Bota Box", country: "USA", wines: [{ name: "Cabernet Sauvignon", type: R, region: "California" }, { name: "Chardonnay", type: W, region: "California" }, { name: "Pinot Grigio", type: W, region: "California" }, { name: "Malbec", type: R, region: "California" }, { name: "Rosé", type: Ro, region: "California" }, { name: "Nighthawk Black Red Blend", type: R, region: "California" }]},
