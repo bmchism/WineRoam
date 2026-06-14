@@ -1,0 +1,11 @@
+{
+  "name": "@wine-roam/seed",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "top-wines.ts",
+  "types": "top-wines.ts",
+  "exports": {
+    ".": "./top-wines.ts"
+  }
+}

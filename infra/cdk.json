@@ -1,0 +1,28 @@
+{
+  "app": "npx ts-node --prefer-ts-exts bin/wine.ts",
+  "watch": {
+    "include": ["**"],
+    "exclude": ["README.md", "cdk*.json", "node_modules", "**/*.d.ts"]
+  },
+  "context": {
+    "account": "012185415876",
+    "region": "us-east-1",
+    "alertEmail": "bmchism@gmail.com",
+    "monthlyBudget": "30",
+    "anthropicWorkspaceId": "wrkspc_01EWTjYKfBXnfepKr3xh94p9",
+    "cognitoDomainPrefix": "wine-roam",
+    "googleClientId": "775194967119-3ej9e5nimbhen7heebcp7jbkf4b66qj7.apps.googleusercontent.com",
+    "appleServicesId": "",
+    "appleTeamId": "",
+    "appleKeyId": "",
+    "enableSecurityBaseline": "false",
+    "resendCognitoEmails": "false",
+    "domainName": "wine.roamthrough.com",
+    "hostedZoneId": "Z03017282RUCK867AHXWY",
+    "hostedZoneName": "roamthrough.com",
+    "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
+    "@aws-cdk/core:checkSecretUsage": true,
+    "@aws-cdk/aws-iam:minimizePolicies": true,
+    "@aws-cdk/core:newStyleStackSynthesis": true
+  }
+}

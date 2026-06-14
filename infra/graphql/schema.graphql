@@ -1,0 +1,404 @@
+# AppSync schema for Wine Roam. Auth directives applied via CDK defaults.
+
+type Winery {
+  id: ID!
+  name: String!
+  region: String!
+  appellation: String
+  country: String
+  winemaker: String
+  grapes: [String!]
+  notes: String
+  website: String
+}
+
+type SourceLink @aws_api_key @aws_cognito_user_pools {
+  label: String!
+  url: String!
+}
+
+type Bottle @aws_api_key @aws_cognito_user_pools {
+  id: ID!
+  producer: String!
+  name: String!
+  wineryId: String!
+  wineType: String!
+  vintage: Int
+  abv: Float!
+  region: String!
+  appellation: String
+  country: String
+  grapes: [String!]
+  aging: String
+  vinification: String
+  soil: String
+  climate: String
+  aromas: [String!]!
+  flavors: [String!]!
+  tastingNotes: String
+  story: String
+  accent: String!
+  verified: Boolean
+  organic: Boolean
+  biodynamic: Boolean
+  naturalWine: Boolean
+  imageKeys: [String!]
+  sources: [SourceLink!]
+  createdAt: String
+  updatedAt: String
+}
+
+type Flight @aws_api_key @aws_cognito_user_pools {
+  id: ID!
+  title: String!
+  subtitle: String!
+  bottleIds: [String!]!
+  curated: Boolean!
+}
+
+type TastingSession {
+  sessionId: ID!
+  tastingId: String!
+  hostId: String!
+  joinCode: String!
+  status: String!
+  pacing: String!
+  visibility: String!
+  currentStep: Int!
+  createdAt: String!
+}
+
+type Participant {
+  sessionId: ID!
+  participantId: ID!
+  displayName: String!
+  accountId: String
+  joinedAt: String!
+}
+
+type Rating {
+  sessionId: ID!
+  participantId: ID!
+  bottleId: ID!
+  appearance: Int
+  nose: Int
+  palate: Int
+  finish: Int
+  overall: Int
+  note: String
+  syncedAt: String!
+}
+
+type Review @aws_api_key @aws_cognito_user_pools {
+  bottleId: ID!
+  userId: ID!
+  displayName: String!
+  body: String!
+  score: Int
+  nose: Int
+  palate: Int
+  finish: Int
+  published: Boolean!
+  moderation: String
+  createdAt: String!
+}
+
+type LeaderboardEntry {
+  participantId: ID!
+  displayName: String!
+  correct: Int!
+  total: Int!
+  avgMs: Float!
+}
+
+input RatingInput {
+  sessionId: ID!
+  participantId: ID!
+  bottleId: ID!
+  appearance: Int
+  nose: Int
+  palate: Int
+  finish: Int
+  overall: Int
+  note: String
+}
+
+input ReviewInput {
+  bottleId: ID!
+  body: String!
+  score: Int
+  nose: Int
+  palate: Int
+  finish: Int
+  published: Boolean!
+}
+
+type UploadTarget @aws_api_key @aws_cognito_user_pools {
+  uploadUrl: String!
+  key: String!
+  publicUrl: String!
+}
+
+type UserProfile @aws_cognito_user_pools {
+  displayName: String!
+  phone: String!
+  notify: Boolean!
+  favorite: String!
+}
+input ProfileInput {
+  displayName: String
+  phone: String
+  notify: Boolean
+  favorite: String
+}
+input FlightInput {
+  id: String!
+  title: String!
+  subtitle: String!
+  bottleIds: [String!]!
+}
+input BottlePatch {
+  verified: Boolean
+  wineryId: String
+  abv: Float
+  wineType: String
+  organic: Boolean
+}
+
+type ShelfItem @aws_cognito_user_pools {
+  bottleId: ID!
+  status: String!
+  addedAt: String!
+}
+
+type Reminder @aws_cognito_user_pools {
+  id: ID!
+  title: String!
+  message: String!
+  when: String!
+  channel: String!
+  email: String
+  phone: String
+}
+input ReminderInput {
+  id: String!
+  title: String!
+  message: String!
+  when: String!
+  channel: String!
+  email: String
+  phone: String
+}
+
+type TastingEntry @aws_cognito_user_pools {
+  id: ID!
+  flightId: String!
+  title: String!
+  bottleCount: Int!
+  avgScore: Float!
+  quizCorrect: Int
+  quizTotal: Int
+  mode: String!
+  createdAt: String!
+}
+input TastingEntryInput {
+  id: String!
+  flightId: String!
+  title: String!
+  bottleCount: Int!
+  avgScore: Float!
+  quizCorrect: Int
+  quizTotal: Int
+  mode: String!
+  createdAt: String!
+}
+
+type PopBottle @aws_api_key @aws_cognito_user_pools {
+  bottleId: ID!
+  count: Int!
+}
+
+type Query {
+  listBottles: [Bottle!]!
+  bottlePopularity: [PopBottle!]!
+  getBottle(id: ID!): Bottle
+  getScanResult(imageKey: String!): Bottle
+  listFlights: [Flight!]!
+  getSession(sessionId: ID!): TastingSession
+  listParticipants(sessionId: ID!): [Participant!]!
+  listRatings(sessionId: ID!, bottleId: ID!): [Rating!]!
+  listReviews(bottleId: ID!): [Review!]!
+  leaderboard(sessionId: ID!): [LeaderboardEntry!]!
+  listPendingReviews: [Review!]! @aws_cognito_user_pools
+  adminListUsers(search: String, nextToken: String): AdminUserPage! @aws_cognito_user_pools
+  adminGetUser(username: ID!): AdminUserDetail! @aws_cognito_user_pools
+  adminAuditLog(limit: Int): [AuditEntry!]! @aws_cognito_user_pools
+  adminCosts(refresh: Boolean): AdminCosts! @aws_cognito_user_pools
+  getMyProfile: UserProfile! @aws_cognito_user_pools
+  listMyFlights: [Flight!]! @aws_cognito_user_pools
+  listMyHistory: [TastingEntry!]! @aws_cognito_user_pools
+  listMyFavorites: [String!]! @aws_cognito_user_pools
+  listMyShelf: [ShelfItem!]! @aws_cognito_user_pools
+  listMyReminders: [Reminder!]! @aws_cognito_user_pools
+  adminAnalytics(days: Int): [AnalyticsDay!]! @aws_cognito_user_pools
+  adminAlarms: [AlarmRow!]! @aws_cognito_user_pools
+  adminAiUsage(days: Int): [AiFeatureCost!]! @aws_cognito_user_pools
+  adminListFeedback(limit: Int): [Feedback!]! @aws_cognito_user_pools
+  adminPageViews: [PageView!]! @aws_cognito_user_pools
+}
+
+type PageView @aws_cognito_user_pools {
+  page: String!
+  count: Int!
+}
+
+type Feedback @aws_cognito_user_pools {
+  id: ID!
+  at: String!
+  category: String!
+  message: String!
+  email: String
+  path: String
+}
+
+type AiFeatureCost @aws_cognito_user_pools {
+  feature: String!
+  model: String!
+  inputTokens: Float!
+  outputTokens: Float!
+  cacheReadTokens: Float!
+  cacheWriteTokens: Float!
+  calls: Int!
+  cost: Float!
+}
+
+type AlarmRow @aws_cognito_user_pools {
+  name: String!
+  state: String!
+  reason: String!
+  metric: String!
+  updated: String!
+}
+
+type ModerationResult @aws_api_key @aws_cognito_user_pools {
+  verdict: String!
+  reason: String!
+}
+
+type AdminUser @aws_cognito_user_pools {
+  username: ID!
+  email: String!
+  status: String!
+  enabled: Boolean!
+  createdAt: String!
+  lastModified: String
+  emailVerified: Boolean
+  isAdmin: Boolean
+}
+
+type AdminUserPage @aws_cognito_user_pools {
+  users: [AdminUser!]!
+  nextToken: String
+}
+
+type AdminUserDetail @aws_cognito_user_pools {
+  username: ID!
+  email: String!
+  status: String!
+  enabled: Boolean!
+  createdAt: String!
+  lastModified: String
+  emailVerified: Boolean
+  mfaEnabled: Boolean!
+  preferredMfa: String
+  lastLogin: String
+  loginCount: Int
+  isAdmin: Boolean!
+}
+
+type AuditEntry @aws_cognito_user_pools {
+  at: String!
+  actor: String!
+  action: String!
+  target: String!
+  detail: String!
+}
+
+type CostLine @aws_cognito_user_pools {
+  name: String!
+  amount: Float!
+}
+
+type ModelCost @aws_cognito_user_pools {
+  model: String!
+  inputTokens: Float!
+  outputTokens: Float!
+  cacheReadTokens: Float!
+  cacheWriteTokens: Float!
+  cost: Float!
+}
+
+type AdminCosts @aws_cognito_user_pools {
+  awsMonth: Float!
+  anthropicMonth: Float!
+  anthropicEstimate: Float!
+  budget: Float!
+  asOf: String!
+  cached: Boolean!
+  awsByService: [CostLine!]!
+  awsDaily: [CostLine!]!
+  anthropicByModel: [ModelCost!]!
+}
+
+type AnalyticsDay @aws_cognito_user_pools {
+  day: String!
+  pageView: Int!
+  tastingStarted: Int!
+  scan: Int!
+  quizAnswer: Int!
+  reviewPublished: Int!
+  liveHosted: Int!
+}
+
+type Mutation {
+  startSession(tastingId: ID!, pacing: String!, visibility: String!): TastingSession!
+  advanceSession(sessionId: ID!, step: Int!, status: String): TastingSession!
+  joinSession(joinCode: String!, displayName: String!): Participant!
+  submitRating(input: RatingInput!): Rating!
+  answerQuiz(sessionId: ID!, participantId: ID!, questionId: ID!, choiceIndex: Int!, correct: Boolean!, ms: Int!): Boolean!
+  track(name: String!, path: String): Boolean!
+  submitFeedback(category: String!, message: String!, email: String, path: String): Boolean!
+  upsertReview(input: ReviewInput!): Review! @aws_cognito_user_pools
+  recognizeBottle(imageKey: String!): Bottle @aws_cognito_user_pools
+  askChat(message: String!, history: String): String!
+  sendInvite(joinCode: String!, email: String, phone: String): Boolean! @aws_cognito_user_pools
+  sendRecap(email: String, phone: String, subject: String, html: String, text: String): Boolean! @aws_cognito_user_pools
+  presignUpload(bottleId: ID!, contentType: String!): UploadTarget! @aws_cognito_user_pools
+  setBottleImage(bottleId: ID!, imageUrl: String!): Bottle! @aws_cognito_user_pools
+  moderateReview(bottleId: ID!, userId: ID!): ModerationResult! @aws_cognito_user_pools
+  setReviewModeration(bottleId: ID!, userId: ID!, decision: String!): Review! @aws_cognito_user_pools
+  adminUserAction(username: String!, action: String!, value: String): Boolean! @aws_cognito_user_pools
+  saveMyProfile(input: ProfileInput!): UserProfile! @aws_cognito_user_pools
+  saveMyFlight(input: FlightInput!): Flight! @aws_cognito_user_pools
+  deleteMyFlight(id: String!): Boolean! @aws_cognito_user_pools
+  adminPatchBottle(id: ID!, patch: BottlePatch!): Bottle! @aws_cognito_user_pools
+  adminDeleteBottle(id: ID!): Boolean! @aws_cognito_user_pools
+  saveMyTasting(input: TastingEntryInput!): TastingEntry! @aws_cognito_user_pools
+  deleteMyTasting(id: String!): Boolean! @aws_cognito_user_pools
+  setFavorite(bottleId: String!, favorited: Boolean!): Boolean! @aws_cognito_user_pools
+  setShelf(bottleId: ID!, status: String): Boolean! @aws_cognito_user_pools
+  savePushSub(subscription: String!): Boolean! @aws_cognito_user_pools
+  removePushSub(endpoint: String!): Boolean! @aws_cognito_user_pools
+  adminTestPush: Boolean! @aws_cognito_user_pools
+  saveMyReminder(input: ReminderInput!): Reminder! @aws_cognito_user_pools
+  deleteMyReminder(id: String!): Boolean! @aws_cognito_user_pools
+}
+
+type Subscription {
+  onSessionAdvanced(sessionId: ID!): TastingSession
+    @aws_subscribe(mutations: ["advanceSession"])
+  onParticipantJoined(sessionId: ID!): Participant
+    @aws_subscribe(mutations: ["joinSession"])
+  onRatingSubmitted(sessionId: ID!): Rating
+    @aws_subscribe(mutations: ["submitRating"])
+}

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+cdk.out/
+.env
+*.js.map
+*.d.ts
+!vite.config.ts
+.DS_Store
