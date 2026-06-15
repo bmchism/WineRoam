@@ -9,7 +9,7 @@ export default function BottleCard({ bottle, index = 0 }: { bottle: Bottle; inde
   const accent = bottle.accent || "#722F37";
   const wineType = bottle.wineType || bottle.expression || "Red";
   const producer = bottle.producer || bottle.brand || "";
-  const region = bottle.region || bottle.agaveRegion || "";
+  const region = bottle.region || bottle.grapeRegion || bottle.agaveRegion || "";
   const flavors = bottle.flavors ?? [];
 
   return (

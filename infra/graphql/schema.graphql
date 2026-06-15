@@ -26,6 +26,7 @@ type Bottle @aws_api_key @aws_cognito_user_pools {
   abv: Float!
   proof: Float
   agaveRegion: String
+  grapeRegion: String
   waterSource: String
   fermentation: String
   stillType: String

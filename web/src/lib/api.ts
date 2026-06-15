@@ -10,7 +10,7 @@ import { bottles as seedBottles, bottleById as seedById } from "../data/bottles"
 const client = () => generateClient();
 
 const BOTTLE_FIELDS = `
-  id brand name nom expression abv proof agaveRegion
+  id brand name nom expression abv proof agaveRegion grapeRegion
   aging aromas flavors tastingNotes story accent verified additiveFree imageKeys
 `;
 

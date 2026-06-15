@@ -65,6 +65,8 @@ export interface Bottle {
   expression: WineType;
   /** @deprecated use region */
   agaveRegion: string;
+  /** Region from enrichment */
+  grapeRegion?: string;
   /** @deprecated use organic */
   additiveFree?: boolean;
   /** Proof (2x ABV) */

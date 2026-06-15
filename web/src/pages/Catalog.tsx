@@ -34,6 +34,8 @@ export default function Catalog() {
   const [sort, setSort] = useState<Sort>("pop");
   const [afOnly, setAfOnly] = useState(false);
   const [favOnly, setFavOnly] = useState(false);
+  const [country, setCountry] = useState("All");
+  const [region, setRegion] = useState("All");
   const [favs, setFavs] = useState<Set<string>>(new Set());
   const [pop, setPop] = useState<Map<string, number>>(new Map());
   const { user } = useAuth();
@@ -60,6 +62,30 @@ export default function Catalog() {
     syncFavorites(!!user).then((ids) => setFavs(new Set(ids))).catch(() => {});
   }, [user]);
 
+  // Derive country and region options from the loaded data
+  const { countries, regions } = useMemo(() => {
+    const countryMap: Record<string, number> = {};
+    const regionMap: Record<string, number> = {};
+    for (const b of all) {
+      const r = b.grapeRegion || b.agaveRegion || "";
+      if (!r) continue;
+      const parts = r.split(",").map((s) => s.trim());
+      if (parts.length >= 2) {
+        const c = parts[parts.length - 1];
+        countryMap[c] = (countryMap[c] || 0) + 1;
+        // Use the first part as the sub-region
+        const subRegion = parts[0];
+        regionMap[subRegion] = (regionMap[subRegion] || 0) + 1;
+      } else if (r) {
+        regionMap[r] = (regionMap[r] || 0) + 1;
+      }
+    }
+    return {
+      countries: Object.entries(countryMap).sort((a, b) => b[1] - a[1]).map(([k]) => k),
+      regions: Object.entries(regionMap).sort((a, b) => b[1] - a[1]).map(([k]) => k),
+    };
+  }, [all]);
+
   const list = useMemo(() => {
     const needle = q.trim().toLowerCase();
     let out = all.filter((b) => {
@@ -67,7 +93,10 @@ export default function Catalog() {
       if (active !== "All" && wineType !== active) return false;
       if (afOnly && !b.organic && !b.additiveFree) return false;
       if (favOnly && !favs.has(b.id)) return false;
-      if (needle && !`${b.name} ${b.brand || ""} ${b.nom || ""} ${b.agaveRegion || ""}`.toLowerCase().includes(needle)) return false;
+      const r = b.grapeRegion || b.agaveRegion || "";
+      if (country !== "All" && !r.toLowerCase().includes(country.toLowerCase())) return false;
+      if (region !== "All" && !r.toLowerCase().includes(region.toLowerCase())) return false;
+      if (needle && !`${b.name} ${b.brand || ""} ${b.nom || ""} ${r}`.toLowerCase().includes(needle)) return false;
       return true;
     });
     out = [...out].sort((a, b) => {
@@ -81,7 +110,7 @@ export default function Catalog() {
       }
     });
     return out;
-  }, [all, active, q, sort, afOnly, favOnly, favs, pop]);
+  }, [all, active, q, sort, afOnly, favOnly, country, region, favs, pop]);
 
   const afCount = useMemo(() => all.filter((b) => b.organic || b.additiveFree).length, [all]);
 
@@ -131,13 +160,28 @@ export default function Catalog() {
               <option key={s.v} value={s.v}>{s.label}</option>
             ))}
           </select>
+          <select className="select-mini" aria-label="Filter by country" value={country} onChange={(e) => setCountry(e.target.value)}>
+            <option value="All">All Countries</option>
+            {countries.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <select className="select-mini" aria-label="Filter by region" value={region} onChange={(e) => setRegion(e.target.value)}>
+            <option value="All">All Regions</option>
+            {regions.slice(0, 30).map((r) => <option key={r} value={r}>{r}</option>)}
+          </select>
+          <span className="count-pill">{list.length}</span>
+        </div>
+        <div className="catalog-controls" style={{ marginTop: 6 }}>
           <button className={`chip tap${afOnly ? " active" : ""}`} onClick={() => setAfOnly((v) => !v)}>
             🍇 Organic{afCount ? ` · ${afCount}` : ""}
           </button>
           <button className={`chip tap${favOnly ? " active" : ""}`} onClick={() => setFavOnly((v) => !v)}>
             ★ Favorites
           </button>
-          <span className="count-pill">{list.length}</span>
+          {(country !== "All" || region !== "All" || afOnly || favOnly || active !== "All") && (
+            <button className="chip tap" onClick={() => { setActive("All"); setCountry("All"); setRegion("All"); setAfOnly(false); setFavOnly(false); setQ(""); }}>
+              ✕ Clear all
+            </button>
+          )}
         </div>
 
         {loading ? (
@@ -146,13 +190,13 @@ export default function Catalog() {
           <div className="empty-state" style={{ textAlign: "center", padding: "40px 12px" }}>
             <div style={{ fontSize: 40 }}>🍸</div>
             <p className="muted" style={{ marginTop: 8, fontSize: 14.5 }}>No bottles match those filters.</p>
-            <button className="btn ghost" style={{ marginTop: 10 }} onClick={() => { setActive("All"); setQ(""); setAfOnly(false); setFavOnly(false); }}>
+            <button className="btn ghost" style={{ marginTop: 10 }} onClick={() => { setActive("All"); setQ(""); setAfOnly(false); setFavOnly(false); setCountry("All"); setRegion("All"); }}>
               Clear filters
             </button>
           </div>
         ) : (
           // Re-stagger on filter/sort change (not on every keystroke) for visual continuity.
-          <motion.div key={`${active}|${sort}|${afOnly}|${favOnly}`} className="list" style={{ marginTop: 12 }}>
+          <motion.div key={`${active}|${sort}|${afOnly}|${favOnly}|${country}|${region}`} className="list" style={{ marginTop: 12 }}>
             {list.map((b, i) => (
               <BottleCard key={b.id} bottle={b} index={Math.min(i, 8)} />
             ))}
