@@ -10,9 +10,9 @@ import { bottles as seedBottles, bottleById as seedById } from "../data/bottles"
 const client = () => generateClient();
 
 const BOTTLE_FIELDS = `
-  id producer name wineryId wineType vintage abv region
-  appellation country grapes aging vinification soil climate
-  aromas flavors tastingNotes story accent verified organic biodynamic naturalWine
+  id brand name nom expression abv proof agaveRegion
+  waterSource fermentation stillType crushing distillation cooking aging
+  aromas flavors tastingNotes story accent verified additiveFree imageKeys
 `;
 
 async function run<T>(query: string, variables: Record<string, unknown> = {}, authMode: "apiKey" | "userPool" = "apiKey"): Promise<T> {

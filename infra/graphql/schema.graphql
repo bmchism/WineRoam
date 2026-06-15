@@ -19,29 +19,27 @@ type SourceLink @aws_api_key @aws_cognito_user_pools {
 
 type Bottle @aws_api_key @aws_cognito_user_pools {
   id: ID!
-  producer: String!
+  brand: String!
   name: String!
-  wineryId: String!
-  wineType: String!
-  vintage: Int
+  nom: String!
+  expression: String!
   abv: Float!
-  region: String!
-  appellation: String
-  country: String
-  grapes: [String!]
+  proof: Float
+  agaveRegion: String!
+  waterSource: String
+  fermentation: String
+  stillType: String
+  crushing: String
+  distillation: String
+  cooking: String
   aging: String
-  vinification: String
-  soil: String
-  climate: String
   aromas: [String!]!
   flavors: [String!]!
   tastingNotes: String
   story: String
   accent: String!
   verified: Boolean
-  organic: Boolean
-  biodynamic: Boolean
-  naturalWine: Boolean
+  additiveFree: Boolean
   imageKeys: [String!]
   sources: [SourceLink!]
   createdAt: String
@@ -159,10 +157,10 @@ input FlightInput {
 }
 input BottlePatch {
   verified: Boolean
-  wineryId: String
+  nom: String
   abv: Float
-  wineType: String
-  organic: Boolean
+  expression: String
+  additiveFree: Boolean
 }
 
 type ShelfItem @aws_cognito_user_pools {
