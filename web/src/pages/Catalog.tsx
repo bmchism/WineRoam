@@ -31,7 +31,7 @@ export default function Catalog() {
   const [live, setLive] = useState(false);
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState("");
-  const [sort, setSort] = useState<Sort>("az");
+  const [sort, setSort] = useState<Sort>("pop");
   const [afOnly, setAfOnly] = useState(false);
   const [favOnly, setFavOnly] = useState(false);
   const [favs, setFavs] = useState<Set<string>>(new Set());
@@ -63,18 +63,19 @@ export default function Catalog() {
   const list = useMemo(() => {
     const needle = q.trim().toLowerCase();
     let out = all.filter((b) => {
-      if (active !== "All" && b.wineType !== active) return false;
-      if (afOnly && !b.organic) return false;
+      const wineType = b.wineType || b.expression || "";
+      if (active !== "All" && wineType !== active) return false;
+      if (afOnly && !b.organic && !b.additiveFree) return false;
       if (favOnly && !favs.has(b.id)) return false;
-      if (needle && !`${b.name} ${b.producer} ${b.wineryId} ${b.region}`.toLowerCase().includes(needle)) return false;
+      if (needle && !`${b.name} ${b.brand || ""} ${b.nom || ""} ${b.agaveRegion || ""}`.toLowerCase().includes(needle)) return false;
       return true;
     });
     out = [...out].sort((a, b) => {
       switch (sort) {
         case "za": return b.name.localeCompare(a.name);
-        case "abv-desc": return b.abv - a.abv || a.name.localeCompare(b.name);
-        case "abv-asc": return a.abv - b.abv || a.name.localeCompare(b.name);
-        case "expr": return exprIndex(a.wineType) - exprIndex(b.wineType) || a.name.localeCompare(b.name);
+        case "abv-desc": return (b.abv || 0) - (a.abv || 0) || a.name.localeCompare(b.name);
+        case "abv-asc": return (a.abv || 0) - (b.abv || 0) || a.name.localeCompare(b.name);
+        case "expr": return exprIndex(a.wineType || a.expression || "Red") - exprIndex(b.wineType || b.expression || "Red") || a.name.localeCompare(b.name);
         case "pop": return (pop.get(b.id) ?? 0) - (pop.get(a.id) ?? 0) || a.name.localeCompare(b.name);
         default: return a.name.localeCompare(b.name);
       }
@@ -82,7 +83,7 @@ export default function Catalog() {
     return out;
   }, [all, active, q, sort, afOnly, favOnly, favs, pop]);
 
-  const afCount = useMemo(() => all.filter((b) => b.organic).length, [all]);
+  const afCount = useMemo(() => all.filter((b) => b.organic || b.additiveFree).length, [all]);
 
   return (
     <>

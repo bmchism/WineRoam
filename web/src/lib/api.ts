@@ -11,8 +11,7 @@ const client = () => generateClient();
 
 const BOTTLE_FIELDS = `
   id brand name nom expression abv proof agaveRegion
-  waterSource fermentation stillType crushing distillation cooking aging
-  aromas flavors tastingNotes story accent verified additiveFree imageKeys
+  aging aromas flavors tastingNotes story accent verified additiveFree imageKeys
 `;
 
 async function run<T>(query: string, variables: Record<string, unknown> = {}, authMode: "apiKey" | "userPool" = "apiKey"): Promise<T> {
@@ -26,7 +25,8 @@ export async function listBottles(): Promise<{ bottles: Bottle[]; live: boolean 
   if (!isApiConfigured) return { bottles: seedBottles, live: false };
   try {
     const data = await run<{ listBottles: Bottle[] }>(`query { listBottles { ${BOTTLE_FIELDS} } }`);
-    const list = data.listBottles ?? [];
+    // Filter out null entries (AppSync returns null for items that fail non-nullable checks)
+    const list = (data.listBottles ?? []).filter((b): b is Bottle => b != null && !!b.id);
     return list.length ? { bottles: list, live: true } : { bottles: seedBottles, live: false };
   } catch {
     return { bottles: seedBottles, live: false };

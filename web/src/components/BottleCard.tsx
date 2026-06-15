@@ -6,6 +6,12 @@ import { ChevronRight } from "../icons";
 
 export default function BottleCard({ bottle, index = 0 }: { bottle: Bottle; index?: number }) {
   const imageUrl = bottle.imageKeys?.[0];
+  const accent = bottle.accent || "#722F37";
+  const wineType = bottle.wineType || bottle.expression || "Red";
+  const producer = bottle.producer || bottle.brand || "";
+  const region = bottle.region || bottle.agaveRegion || "";
+  const flavors = bottle.flavors ?? [];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 14 }}
@@ -17,29 +23,26 @@ export default function BottleCard({ bottle, index = 0 }: { bottle: Bottle; inde
           {imageUrl ? (
             <img src={imageUrl} alt={bottle.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           ) : (
-            <BottleVisual name={bottle.producer} accent={bottle.accent} size={56} />
+            <BottleVisual name={producer} accent={accent} size={56} />
           )}
           {bottle.organic && <span className="af-corner" title="Organic/Biodynamic" aria-label="Organic wine">🍇</span>}
         </div>
         <div className="body">
-          <span
-            className="pill"
-            style={{ background: bottle.accent }}
-          >
+          <span className="pill" style={{ background: accent }}>
             <span className="dot" />
-            {bottle.wineType}
+            {wineType}
           </span>
           <h3 className="brand">{bottle.name}</h3>
           <div className="meta">
-            {bottle.producer}{bottle.vintage ? ` · ${bottle.vintage}` : ""} · {bottle.region}
+            {producer}{region ? ` · ${region}` : ""}
           </div>
-          <div className="taglist tags">
-            {bottle.flavors.slice(0, 3).map((f) => (
-              <span className="tag" key={f}>
-                {f}
-              </span>
-            ))}
-          </div>
+          {flavors.length > 0 && (
+            <div className="taglist tags">
+              {flavors.slice(0, 3).map((f) => (
+                <span className="tag" key={f}>{f}</span>
+              ))}
+            </div>
+          )}
         </div>
         <span style={{ alignSelf: "center", color: "var(--muted)", display: "flex" }}>
           <ChevronRight size={20} />
