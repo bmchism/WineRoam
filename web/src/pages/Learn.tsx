@@ -6,8 +6,8 @@ import { PHOTOS } from "../data/process";
 import { wineTypeGuides } from "../data/learn";
 
 const VIDEOS = [
-  { id: "XLHb-b2sAss", title: "How Wine Is Made — From Grape to Glass" },
-  { id: "6YpbGkf-aqI", title: "Wine for Beginners — Everything You Need to Know" },
+  { id: "RMQQo2OEl10", title: "Wine Folly: Wine 101 — A Beginner's Guide" },
+  { id: "9BUNN_kYprQ", title: "WSET 3 Minute Wine School — How to Taste Wine" },
 ];
 
 export default function Learn() {
