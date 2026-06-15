@@ -54,7 +54,7 @@ export const handler = async (event: EnrichEvent): Promise<Bottle> => {
   // valid JSON with the required fields and confidence >= 0.7.
   const accept = (text: string) => {
     const j = extractJson<RawBottle>(text);
-    return Boolean(j && j.brand && j.nom && j.expression && (j.confidence ?? 0) >= 0.7);
+    return Boolean(j && j.brand && j.expression && (j.confidence ?? 0) >= 0.7);
   };
 
   // Photos are harder — start one tier up so we don't waste a Haiku pass.
@@ -75,12 +75,12 @@ export const handler = async (event: EnrichEvent): Promise<Bottle> => {
   );
 
   const raw = extractJson<RawBottle>(text);
-  if (!raw || !raw.brand || !raw.nom || !raw.expression) {
+  if (!raw || !raw.brand || !raw.expression) {
     throw new Error(`enrich: could not parse a bottle (tier ${tier})`);
   }
 
-  const nom = normalizeNom(raw.nom);
-  const id = slug(`${raw.brand}-${raw.expression}-${nom}`);
+  const nom = raw.nom ? normalizeNom(raw.nom) : (raw.grapeRegion ?? "Unknown");
+  const id = slug(`${raw.brand}-${raw.expression}-${raw.name ?? nom}`);
   const now = new Date().toISOString();
   const bottle: Bottle = {
     id,
@@ -90,7 +90,7 @@ export const handler = async (event: EnrichEvent): Promise<Bottle> => {
     expression: raw.expression,
     abv: raw.abv ?? 40,
     proof: Math.round((raw.abv ?? 40) * 2),
-    grapeRegion: raw.grapeRegion ?? "Jalisco",
+    grapeRegion: raw.grapeRegion ?? "Unknown",
     waterSource: raw.waterSource,
     fermentation: raw.fermentation,
     stillType: raw.stillType,
@@ -102,7 +102,7 @@ export const handler = async (event: EnrichEvent): Promise<Bottle> => {
     flavors: raw.flavors ?? [],
     tastingNotes: raw.tastingNotes,
     story: raw.story,
-    accent: ACCENTS[raw.expression],
+    accent: ACCENTS[raw.expression] ?? "#722F37",
     additiveFree: raw.additiveFree,
     verified: false, // generated — awaits admin review
     imageKeys: event.imageKey ? [event.imageKey] : undefined,
