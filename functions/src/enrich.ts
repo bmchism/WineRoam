@@ -15,19 +15,26 @@ export interface EnrichEvent {
 }
 
 const SYSTEM = `You are a wine expert building structured catalog entries.
-Given a label photo and/or a brand hint, return ONLY a JSON object for the bottle.
+Given a wine name/producer hint, return ONLY a JSON object for the bottle.
 Be accurate and conservative: if you are unsure of a field, omit it rather than guess.
-Never invent a NOM. Mark additiveFree true ONLY if the brand is well-documented as additive-free; otherwise omit it.
 JSON shape:
 {
-  "brand": string, "name": string, "nom": string, "expression": "Blanco"|"High Proof Blanco"|"Reposado"|"Añejo"|"Extra Añejo"|"Cristalino",
-  "abv": number, "grapeRegion": string, "waterSource"?: string, "fermentation"?: string,
-  "stillType"?: string, "crushing"?: string, "distillation"?: string, "cooking"?: string, "aging"?: string,
-  "aromas": string[], "flavors": string[], "tastingNotes"?: string, "story"?: string,
-  "additiveFree"?: boolean, "confidence": number
+  "brand": string (producer name), "name": string (full wine name), "nom": string (region/appellation),
+  "expression": "Red"|"White"|"Rosé"|"Sparkling"|"Dessert"|"Orange",
+  "abv": number, "grapeRegion": string (full region e.g. "Napa Valley, California"),
+  "aging"?: string, "aromas": string[], "flavors": string[],
+  "tastingNotes"?: string, "story"?: string,
+  "additiveFree"?: boolean (true only if certified organic/biodynamic), "confidence": number (0-1)
 }`;
 
-const ACCENTS: Record<Expression, string> = {
+const ACCENTS: Record<string, string> = {
+  Red: "#722F37",
+  White: "#C9A24B",
+  "Rosé": "#E8A0BF",
+  Sparkling: "#9AA7B2",
+  Dessert: "#D4A574",
+  Orange: "#CC7722",
+  // Legacy tequila accents (fallback)
   Blanco: "#7FA15A",
   "High Proof Blanco": "#5E8C4E",
   Reposado: "#C28A3D",

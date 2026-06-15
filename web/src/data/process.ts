@@ -23,9 +23,6 @@ export interface ProcessStage {
   credit?: string;
 }
 
-const WM = (file: string, width = 800) =>
-  `https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=${width}&q=80&auto=format`;
-
 export const PHOTOS = {
   vineyard: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=800&q=80&auto=format",
   harvest: "https://images.unsplash.com/photo-1596142813892-193da6b3d34c?w=800&q=80&auto=format",
