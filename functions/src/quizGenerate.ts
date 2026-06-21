@@ -26,8 +26,8 @@ export const handler = async (event: GenEvent): Promise<Quiz> => {
   const facts = bottles
     .map(
       (b) =>
-        `- ${b.name}: ${b.expression}, NOM ${b.nom}, ${b.abv}%, ${b.grapeRegion}` +
-        (b.crushing ? `, crush: ${b.crushing}` : "") +
+        `- ${b.name}: ${b.expression}, ${b.abv}% ABV, ${b.region ?? "Unknown region"}` +
+        (b.vintage ? `, vintage ${b.vintage}` : "") +
         (b.aging ? `, aging: ${b.aging}` : "") +
         (b.additiveFree ? ", additive-free" : "")
     )

@@ -542,8 +542,7 @@ async function adminPatchBottle(id: string, patch: any): Promise<Bottle> {
   const next: Bottle = { ...b };
   if (typeof patch.verified === "boolean") next.verified = patch.verified;
   if (typeof patch.additiveFree === "boolean") next.additiveFree = patch.additiveFree;
-  if (patch.nom) next.nom = String(patch.nom);
-  if (typeof patch.abv === "number") { next.abv = patch.abv; next.proof = Math.round(patch.abv * 2); }
+  if (typeof patch.abv === "number") { next.abv = patch.abv; }
   if (patch.expression && ACCENTS[patch.expression]) { next.expression = patch.expression; next.accent = ACCENTS[patch.expression]; }
   next.updatedAt = new Date().toISOString();
   await putItem({ ...keys.bottle(id), ...next, type: "Bottle", gsi1pk: "BOTTLE", gsi1sk: next.name });

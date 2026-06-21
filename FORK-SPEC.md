@@ -12,6 +12,7 @@ This spec documents every file and value that changes between spirits. The archi
 - Anthropic API key (shared workspace: `wrkspc_01EWTjYKfBXnfepKr3xh94p9`)
 - Route53 hosted zone for roamthrough.com (`Z03017282RUCK867AHXWY`)
 - GitHub account (bmchism)
+- **SpiritAuthStack deployed** (shared Cognito User Pool — see below)
 
 ## Estimated Cost & Time
 
@@ -69,10 +70,12 @@ All spirit-specific values are consolidated into these files:
 
 | File | What changes |
 |---|---|
-| `infra/cdk.json` | `app` entry point, `cognitoDomainPrefix`, `domainName` |
+| `infra/cdk.json` | `spiritApp` value, `domainName` |
 | `infra/bin/{spirit}.ts` | Stack class name, description |
 | `infra/lib/config.ts` | Interface name, default cognitoDomainPrefix |
 | `infra/lib/{spirit}-stack.ts` | Class name, secret descriptions, API name, WAF metrics, alarm prefixes |
+
+> **Auth is unified.** All spirit apps share the SpiritAuthStack Cognito User Pool. Users sign up once and access all apps. Each fork just sets `"spiritApp": "{spirit}"` in cdk.json to get its own App Client. No per-app Cognito pools are created.
 
 ### Frontend Data Layer (5 files)
 
@@ -154,12 +157,9 @@ aws s3 sync dist s3://{site-bucket} --delete --cache-control "public,max-age=315
 aws s3 cp dist/index.html s3://{site-bucket}/index.html --cache-control "no-cache" --content-type text/html
 aws cloudfront create-invalidation --distribution-id {dist-id} --paths "/*"
 
-# 7. Create admin user
-aws cognito-idp admin-create-user --user-pool-id {pool-id} --username bmchism@gmail.com \
-  --user-attributes Name=email,Value=bmchism@gmail.com Name=email_verified,Value=true \
-  --temporary-password '{Spirit}Roam2024!' --message-action SUPPRESS
-aws cognito-idp admin-set-user-password --user-pool-id {pool-id} --username bmchism@gmail.com --password '{Spirit}Roam2024!' --permanent
-aws cognito-idp admin-add-user-to-group --user-pool-id {pool-id} --username bmchism@gmail.com --group-name admins
+# 7. Admin is already in the shared pool (SpiritAuthStack).
+# No per-app admin creation needed — bmchism@gmail.com has access to all apps.
+# If SpiritAuthStack isn't deployed yet, run: ./scripts/unify-auth.sh
 
 # 8. Run prewarm (in batches of 400)
 for offset in 0 400 800 1200 1600 2000; do

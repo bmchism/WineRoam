@@ -4,6 +4,11 @@ import { config, isApiConfigured, isAuthConfigured } from "./config";
 
 // Configure Amplify once at startup from the deployed stack values. Auth +
 // GraphQL (API key default; userPool for account-scoped calls + subscriptions).
+//
+// The OAuth/Hosted UI is always enabled when a cognitoDomain is set, even without
+// external providers. This enables cross-domain SSO: the Cognito Hosted UI
+// maintains a session cookie, so signing in on one spirit app automatically
+// authenticates the user on all others.
 export function configureAmplify() {
   const resources: ResourcesConfig = {};
 
@@ -12,9 +17,10 @@ export function configureAmplify() {
       Cognito: {
         userPoolId: config.userPoolId,
         userPoolClientId: config.userPoolClientId,
-        // Federated Google/Apple via Hosted-UI redirect — only when the OAuth
-        // domain is configured. Redirects come back to the app's own origin.
-        ...(config.cognitoDomain && config.oauthProviders.length
+        // Always enable Hosted UI OAuth when the domain is set — this is the SSO
+        // mechanism across spirit apps. External providers (Google/Apple) are
+        // optional and additive.
+        ...(config.cognitoDomain
           ? {
               loginWith: {
                 oauth: {
@@ -23,7 +29,9 @@ export function configureAmplify() {
                   redirectSignIn: [`${window.location.origin}/`],
                   redirectSignOut: [`${window.location.origin}/`],
                   responseType: "code",
-                  providers: config.oauthProviders,
+                  providers: config.oauthProviders.length
+                    ? config.oauthProviders
+                    : [],
                 },
               },
             }

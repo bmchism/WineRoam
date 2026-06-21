@@ -19,17 +19,6 @@ export const EXPRESSIONS: WineType[] = [
 
 // ---------- Catalog ----------
 
-export interface Distillery {
-  nom: string;
-  name: string;
-  location: string;
-  masterDistiller?: string;
-  altitude?: string;
-  otherBrands?: string[];
-  notes?: string;
-  website?: string;
-}
-
 export interface Winery {
   id: string;
   name: string;
@@ -51,11 +40,8 @@ export interface Bottle {
   id: string;
   brand: string;
   name: string;
-  nom: string;
   expression: Expression;
   abv: number;
-  proof: number;
-  agaveRegion: string;
   // Wine-specific fields
   producer?: string;
   wineryId?: string;
@@ -71,13 +57,7 @@ export interface Bottle {
   organic?: boolean;
   biodynamic?: boolean;
   naturalWine?: boolean;
-  // Shared fields
-  waterSource?: string;
   fermentation?: string;
-  stillType?: string;
-  crushing?: string;
-  distillation?: string;
-  cooking?: string;
   aging?: string;
   aromas: string[];
   flavors: string[];

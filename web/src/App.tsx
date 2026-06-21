@@ -16,6 +16,7 @@ import Onboarding from "./components/Onboarding";
 import SyncBanner from "./components/SyncBanner";
 import ChatWidget from "./components/ChatWidget";
 import FeedbackPill from "./components/FeedbackPill";
+import { SpiritsNav } from "@agave/shared/components";
 // Landing + Home stay eager (first paint); everything else is route-split so
 // the initial bundle (and the Amplify/Cognito-heavy account + admin code) loads
 // on demand.
@@ -76,6 +77,7 @@ export default function App() {
   return (
     <div className="app">
       <a href="#main" className="skip-link">Skip to content</a>
+      <SpiritsNav currentApp="wine" user={user} onSignOut={() => { /* signOut handled by app nav */ }} />
       {showTop && <TopNav />}
       <SyncBanner />
       <div id="main" tabIndex={-1}>

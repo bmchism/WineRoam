@@ -35,6 +35,10 @@ import { AgaveConfig } from "./config";
 
 interface AgaveStackProps extends StackProps {
   config: AgaveConfig;
+  /** Shared Cognito User Pool from SpiritAuthStack. */
+  userPool?: cognito.IUserPool;
+  /** Per-spirit app clients from SpiritAuthStack. */
+  appClients?: Record<string, cognito.UserPoolClient>;
 }
 
 const FN_ROOT = path.join(__dirname, "..", "..", "functions", "src");
@@ -100,108 +104,62 @@ export class AgaveStack extends Stack {
     }
 
     // ---------------------------------------------------------------- Auth
-    const userPool = new cognito.UserPool(this, "UserPool", {
-      selfSignUpEnabled: true,
-      signInAliases: { email: true },
-      autoVerify: { email: true },
-      passwordPolicy: {
-        minLength: 10,
-        requireLowercase: true,
-        requireUppercase: true,
-        requireDigits: true,
-      },
-      accountRecovery: cognito.AccountRecovery.EMAIL_ONLY,
-      // Optional authenticator-app (TOTP) MFA — users opt in from their profile.
-      mfa: cognito.Mfa.OPTIONAL,
-      mfaSecondFactor: { sms: false, otp: true },
-      // Branded sign-up/reset emails via Resend (CustomEmailSender) — only when
-      // the Resend secret is set (flag), since enabling it disables Cognito's
-      // built-in emails.
-      ...(config.resendCognitoEmails && emailKey && cognitoEmailFn
-        ? { customSenderKmsKey: emailKey, lambdaTriggers: { customEmailSender: cognitoEmailFn } }
-        : {}),
-      removalPolicy: RemovalPolicy.RETAIN,
-    });
-    // Hosted-UI domain — required for federated (Google/Apple) OAuth redirects.
-    const authDomain = userPool.addDomain("AuthDomain", {
-      cognitoDomain: { domainPrefix: config.cognitoDomainPrefix },
-    });
+    // Use the shared SpiritAuthStack pool when available (unified auth mode).
+    let userPool: cognito.IUserPool;
+    let userPoolClient: cognito.IUserPoolClient;
 
-    // Secrets hold ONLY the true secrets (public IDs come from context). Created
-    // empty; populate after deploy, then set enableSocialLogin=true and redeploy.
-    const googleOAuthSecret = new secrets.Secret(this, "GoogleOAuthSecret", {
-      description: "Agave — Google OAuth client secret: set { \"clientSecret\": \"...\" }",
-    });
-    const appleOAuthSecret = new secrets.Secret(this, "AppleOAuthSecret", {
-      description: "Agave — Apple Sign in private key (.p8): set { \"privateKey\": \"...\" }",
-    });
-
-    // Federated identity providers — each activates independently once its
-    // non-secret IDs are set (context) AND its secret is populated. The secret
-    // values are read via SecretValue → never baked into the CFN template.
-    const clientIdps: cognito.UserPoolClientIdentityProvider[] = [
-      cognito.UserPoolClientIdentityProvider.COGNITO,
-    ];
-    const idpDeps: Construct[] = [];
-    if (config.googleClientId) {
-      const google = new cognito.UserPoolIdentityProviderGoogle(this, "Google", {
-        userPool,
-        clientId: config.googleClientId,
-        clientSecretValue: googleOAuthSecret.secretValueFromJson("clientSecret"),
-        scopes: ["openid", "email", "profile"],
-        attributeMapping: {
-          email: cognito.ProviderAttribute.GOOGLE_EMAIL,
-          fullname: cognito.ProviderAttribute.GOOGLE_NAME,
+    if (props.userPool && props.appClients) {
+      userPool = props.userPool;
+      const spiritApp = config.spiritApp || "tequila";
+      userPoolClient = props.appClients[spiritApp];
+      if (!userPoolClient) {
+        throw new Error(`No app client found for spiritApp="${spiritApp}" in SpiritAuthStack`);
+      }
+    } else {
+      // Legacy per-app pool mode
+      const localPool = new cognito.UserPool(this, "UserPool", {
+        selfSignUpEnabled: true,
+        signInAliases: { email: true },
+        autoVerify: { email: true },
+        passwordPolicy: {
+          minLength: 10,
+          requireLowercase: true,
+          requireUppercase: true,
+          requireDigits: true,
+        },
+        accountRecovery: cognito.AccountRecovery.EMAIL_ONLY,
+        mfa: cognito.Mfa.OPTIONAL,
+        mfaSecondFactor: { sms: false, otp: true },
+        ...(config.resendCognitoEmails && emailKey && cognitoEmailFn
+          ? { customSenderKmsKey: emailKey, lambdaTriggers: { customEmailSender: cognitoEmailFn } }
+          : {}),
+        removalPolicy: RemovalPolicy.RETAIN,
+      });
+      localPool.addDomain("AuthDomain", {
+        cognitoDomain: { domainPrefix: config.cognitoDomainPrefix },
+      });
+      new cognito.CfnUserPoolGroup(this, "AdminGroup", {
+        userPoolId: localPool.userPoolId,
+        groupName: "admins",
+        description: "Owner/admin users",
+      });
+      const oauthUrls = [
+        ...(config.domainName ? [`https://${config.domainName}/`] : []),
+        "http://localhost:5173/",
+      ];
+      userPoolClient = localPool.addClient("WebClient", {
+        authFlows: { userSrp: true },
+        preventUserExistenceErrors: true,
+        supportedIdentityProviders: [cognito.UserPoolClientIdentityProvider.COGNITO],
+        oAuth: {
+          flows: { authorizationCodeGrant: true },
+          scopes: [cognito.OAuthScope.OPENID, cognito.OAuthScope.EMAIL, cognito.OAuthScope.PROFILE],
+          callbackUrls: oauthUrls,
+          logoutUrls: oauthUrls,
         },
       });
-      clientIdps.push(cognito.UserPoolClientIdentityProvider.GOOGLE);
-      idpDeps.push(google);
+      userPool = localPool;
     }
-    if (config.appleServicesId && config.appleTeamId && config.appleKeyId) {
-      const apple = new cognito.UserPoolIdentityProviderApple(this, "Apple", {
-        userPool,
-        clientId: config.appleServicesId,
-        teamId: config.appleTeamId,
-        keyId: config.appleKeyId,
-        privateKeyValue: appleOAuthSecret.secretValueFromJson("privateKey"),
-        scopes: ["email", "name"],
-        attributeMapping: { email: cognito.ProviderAttribute.APPLE_EMAIL },
-      });
-      clientIdps.push(cognito.UserPoolClientIdentityProvider.APPLE);
-      idpDeps.push(apple);
-    }
-
-    // OAuth callback/logout URLs the SPA redirects to (must match Amplify config).
-    const oauthUrls = [
-      ...(config.domainName ? [`https://${config.domainName}/`] : []),
-      "http://localhost:5173/",
-    ];
-    const userPoolClient = userPool.addClient("WebClient", {
-      authFlows: { userSrp: true },
-      preventUserExistenceErrors: true,
-      supportedIdentityProviders: clientIdps,
-      oAuth: {
-        flows: { authorizationCodeGrant: true },
-        scopes: [
-          cognito.OAuthScope.OPENID,
-          cognito.OAuthScope.EMAIL,
-          cognito.OAuthScope.PROFILE,
-        ],
-        callbackUrls: oauthUrls,
-        logoutUrls: oauthUrls,
-      },
-    });
-    // Providers must exist before the client lists them.
-    idpDeps.forEach((d) => userPoolClient.node.addDependency(d));
-    new CfnOutput(this, "CognitoAuthDomain", { value: authDomain.baseUrl() });
-    new CfnOutput(this, "GoogleOAuthSecretName", { value: googleOAuthSecret.secretName });
-    new CfnOutput(this, "AppleOAuthSecretName", { value: appleOAuthSecret.secretName });
-
-    new cognito.CfnUserPoolGroup(this, "AdminGroup", {
-      userPoolId: userPool.userPoolId,
-      groupName: "admins",
-      description: "Owner/admin users",
-    });
 
     // ------------------------------------------------------------- Storage
     const uploads = new s3.Bucket(this, "Uploads", {
@@ -428,7 +386,9 @@ export class AgaveStack extends Stack {
     moderateFn.addEnvironment("AI_FEATURE", "moderate");
     prewarmOneFn.addEnvironment("AI_FEATURE", "prewarm");
     // Stamp last-login on every successful sign-in (best-effort; never blocks auth).
-    userPool.addTrigger(cognito.UserPoolOperation.POST_AUTHENTICATION, authEventsFn);
+    if (!props.userPool && userPool instanceof cognito.UserPool) {
+      (userPool as cognito.UserPool).addTrigger(cognito.UserPoolOperation.POST_AUTHENTICATION, authEventsFn);
+    }
     uploads.grantRead(recognizeFn);
     uploads.grantReadWrite(apiFn);
 

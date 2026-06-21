@@ -29,9 +29,11 @@ Same proven stack as Tequila Roam:
 
 | Resource | Value |
 |---|---|
-| Admin login | bmchism@gmail.com / `WineRoam2024!` |
-| Cognito Pool | us-east-1_P5YwGvzKv |
-| Cognito Client | 7gnj7759q9ar569028j8jp89ud |
+| Admin login | bmchism@gmail.com / `Spirits2026!` (unified across all spirit apps) |
+| Shared Auth Pool | SpiritAuthStack (deployed separately, shared by all apps) |
+| Wine App Client | (from SpiritAuthStack outputs: WineClientId) |
+| Legacy Cognito Pool | us-east-1_P5YwGvzKv (deprecated — migrated to shared pool) |
+| Cognito Client | 7gnj7759q9ar569028j8jp89ud (deprecated) |
 | AppSync URL | https://q2utqnwa5zgv7eixs3fhvkudla.appsync-api.us-east-1.amazonaws.com/graphql |
 | API Key | da2-d4yzdknkofhzxfatnmffsadyse |
 | Site Bucket | winestack-sitebucket397a1860-kf1adzicmejt |
@@ -141,3 +143,81 @@ WineRoam2/
 ├── seed/                # Wine manifest (2,143 entries)
 └── HANDOFF.md           # This file
 ```
+
+---
+
+## Unified Auth Integration (Completed 2026-06-21)
+
+### What's Live
+
+- Single Cognito User Pool (`us-east-1_JWONaq4Kj`) shared across all 5 Spirit apps
+- Login on any app authenticates across all domains (Hosted UI SSO)
+- SpiritsNav cross-app navigation bar on all authenticated pages
+- Callback URLs configured in Cognito for all 6 domains (5 apps + hub)
+- Admin account: `bmchism@gmail.com` / `Spirits2026!` (admins group, all apps)
+
+### Config
+
+| Resource | Value |
+|---|---|
+| Cognito Pool ID | `us-east-1_JWONaq4Kj` |
+| Auth Domain | `spirit-roam.auth.us-east-1.amazoncognito.com` |
+| Wine Client | `2223u4fnmbamgp2m5l9sdknut7` |
+| Gin Client | `12gql9qndn85e26cgodkdhlm6c` |
+| Bourbon Client | `6c6aung2pdt9o6t0ntrpf809ui` |
+| Tequila Client | `49vahe3ca0u59rff9ndpqohna0` |
+| Scotch Client | `28ce463bvdb9l7e47spllk1hp8` |
+
+### Auth Flow
+
+1. User visits any spirit app landing page
+2. App checks for local session → if none, redirects to Cognito Hosted UI
+3. Hosted UI checks session cookie → if exists (logged in elsewhere), returns tokens immediately (silent SSO)
+4. If no session cookie → shows login form → user authenticates
+5. Cognito sets session cookie on auth domain + redirects back with auth code
+6. App exchanges code for tokens → user is signed in
+7. Navigate to another spirit app → same flow, but step 3 returns immediately (no prompt)
+
+### Infrastructure
+
+- `SpiritAuthStack` — standalone CDK stack owning the shared pool + 5 app clients
+- Each app stack imports the pool via cross-stack reference (no per-app pools)
+- `spirits.roamthrough.com` — hub landing page (S3 + CloudFront `EFP6HXKCR72GL`)
+
+### Files Changed
+
+- `infra/lib/spirit-auth-stack.ts` — new shared auth stack
+- `infra/lib/config.ts` — added `useSharedAuth`, `spiritApp` config
+- `infra/bin/wine.ts` — wires SpiritAuthStack → WineStack
+- `infra/lib/wine-stack.ts` — accepts shared pool, removed per-app auth
+- `shared/src/auth/` — `SpiritAuthProvider`, `configureSpiritAuth`, types
+- `shared/src/components/SpiritsNav.tsx` — cross-app nav bar
+- `web/src/lib/amplify.ts` — enables Hosted UI OAuth for SSO
+- `web/src/lib/auth.tsx` — adds silent SSO check on load
+- `web/src/App.tsx` — renders SpiritsNav
+- `spirits/` — new hub landing page workspace
+
+### Domains (Live)
+
+- https://spirits.roamthrough.com (hub + auth entry)
+- https://wine.roamthrough.com
+- https://gin.roamthrough.com
+- https://bourbon.roamthrough.com
+- https://tequila.roamthrough.com
+- https://scotch.roamthrough.com
+
+### Bottle Counts (as of 2026-06-21)
+
+| App | Bottles |
+|---|---|
+| Wine | 2,138 |
+| Tequila | 500 |
+| Bourbon | 219 |
+| Scotch | 181 |
+| Gin | 141 |
+
+### Cost
+
+- Anthropic prewarm (today): ~$5.45 total across all apps
+- SpiritAuthStack infra: $0/month (Cognito free tier)
+- Spirits hub hosting: ~$1/month (CloudFront + S3)

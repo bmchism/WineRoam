@@ -21,18 +21,10 @@ type Bottle @aws_api_key @aws_cognito_user_pools {
   id: ID!
   brand: String!
   name: String!
-  nom: String!
   expression: String!
   abv: Float!
-  proof: Float
-  agaveRegion: String
   grapeRegion: String
-  waterSource: String
   fermentation: String
-  stillType: String
-  crushing: String
-  distillation: String
-  cooking: String
   aging: String
   aromas: [String!]!
   flavors: [String!]!
@@ -158,7 +150,6 @@ input FlightInput {
 }
 input BottlePatch {
   verified: Boolean
-  nom: String
   abv: Float
   expression: String
   additiveFree: Boolean

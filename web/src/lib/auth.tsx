@@ -30,7 +30,7 @@ interface AuthCtx {
   isAdmin: boolean;
   loading: boolean;
   configured: boolean;
-  refresh: () => Promise<void>;
+  refresh: () => Promise<void | boolean>;
   signOut: () => Promise<void>;
 }
 
@@ -48,12 +48,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const refresh = async () => {
+  const refresh = async (): Promise<boolean> => {
     if (!isAuthConfigured) {
       setUser(null);
       setIsAdmin(false);
       setLoading(false);
-      return;
+      return false;
     }
     try {
       const cu = await getCurrentUser();
@@ -79,19 +79,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       setUser({ username: cu.username, email, name });
       setIsAdmin(admin);
+      setLoading(false);
+      return true;
     } catch {
       setUser(null);
       setIsAdmin(false);
-    } finally {
-      setLoading(false);
+      return false;
     }
   };
 
   useEffect(() => {
-    refresh();
-    // After a federated (Google/Apple) Hosted-UI redirect returns to the app,
-    // Amplify completes the token exchange and fires these events — re-read the
-    // session so `user` populates and gated redirects fire.
+    const init = async () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has("code") || params.has("error")) {
+        // Returning from Hosted UI redirect — let Amplify process it via Hub.
+        return;
+      }
+
+      const hasUser = await refresh();
+      if (hasUser) return;
+
+      // No local session — attempt silent SSO via Cognito Hosted UI.
+      // If the user signed in on another spirit app, the Hosted UI has a session
+      // cookie and will redirect back immediately with tokens.
+      const ssoKey = "spirit_sso_attempted";
+      if (!sessionStorage.getItem(ssoKey) && isAuthConfigured) {
+        sessionStorage.setItem(ssoKey, "1");
+        try {
+          const { signInWithRedirect } = await import("aws-amplify/auth");
+          await signInWithRedirect();
+        } catch {
+          setLoading(false);
+        }
+      } else {
+        setLoading(false);
+      }
+    };
+
+    init();
+
+    // After a Hosted-UI redirect returns to the app, Amplify completes the
+    // token exchange and fires these events — re-read the session.
     const stop = Hub.listen("auth", ({ payload }) => {
       if (
         payload.event === "signInWithRedirect" ||
@@ -99,6 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       ) {
         refresh();
       } else if (payload.event === "signInWithRedirect_failure") {
+        // SSO check returned error — no active session. Show login form.
         setLoading(false);
       }
     });
@@ -106,7 +135,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signOut = async () => {
-    await amplifySignOut();
+    sessionStorage.removeItem("spirit_sso_attempted");
+    await amplifySignOut({ global: true });
     setUser(null);
     setIsAdmin(false);
   };

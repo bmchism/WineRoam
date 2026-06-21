@@ -9,9 +9,17 @@ export interface WineConfig {
   // Anthropic workspace the app's API key belongs to. When set, the admin cost
   // page scopes Anthropic spend to THIS app instead of the whole shared org.
   anthropicWorkspaceId?: string;
+  // ---- Unified Auth (SpiritAuthStack) ----
+  // When useSharedAuth is true, the app stack imports the shared Cognito User Pool
+  // from SpiritAuthStack instead of creating its own. All spirit apps share one pool.
+  useSharedAuth: boolean;
+  // Which spirit app is this? Used to select the correct App Client from the
+  // shared auth stack. Values: "wine" | "gin" | "bourbon" | "tequila" | "scotch"
+  spiritApp: string;
   // ---- Social login (Google + Apple via Cognito Hosted UI) ----
   // Globally-unique Cognito Hosted-UI domain prefix →
   // https://<prefix>.auth.<region>.amazoncognito.com. Required for OAuth.
+  // Only used by SpiritAuthStack (shared pool) or legacy per-app pool mode.
   cognitoDomainPrefix: string;
   // Each provider activates independently: set its non-secret ID(s) here AND
   // populate its Secrets Manager secret, then deploy. Leave unset to skip it.
@@ -45,7 +53,9 @@ export function loadConfig(app: {
     region: ctx("region") || process.env.CDK_DEFAULT_REGION || "us-east-1",
     monthlyBudget: Number(ctx("monthlyBudget") ?? 30),
     anthropicWorkspaceId: ctx("anthropicWorkspaceId"),
-    cognitoDomainPrefix: ctx("cognitoDomainPrefix") || "wine-roam",
+    useSharedAuth: ctx("useSharedAuth") !== "false", // default: true (unified auth)
+    spiritApp: ctx("spiritApp") || "wine",
+    cognitoDomainPrefix: ctx("cognitoDomainPrefix") || "spirit-roam",
     googleClientId: ctx("googleClientId"),
     appleServicesId: ctx("appleServicesId"),
     appleTeamId: ctx("appleTeamId"),

@@ -19,9 +19,9 @@ Given a wine name/producer hint, return ONLY a JSON object for the bottle.
 Be accurate and conservative: if you are unsure of a field, omit it rather than guess.
 JSON shape:
 {
-  "brand": string (producer name), "name": string (full wine name), "nom": string (region/appellation),
+  "brand": string (producer name), "name": string (full wine name),
   "expression": "Red"|"White"|"Rosé"|"Sparkling"|"Dessert"|"Orange",
-  "abv": number, "grapeRegion": string (full region e.g. "Napa Valley, California"),
+  "abv": number, "region": string (full region e.g. "Napa Valley, California"), "vintage"?: number,
   "aging"?: string, "aromas": string[], "flavors": string[],
   "tastingNotes"?: string, "story"?: string,
   "additiveFree"?: boolean (true only if certified organic/biodynamic), "confidence": number (0-1)
@@ -79,24 +79,15 @@ export const handler = async (event: EnrichEvent): Promise<Bottle> => {
     throw new Error(`enrich: could not parse a bottle (tier ${tier})`);
   }
 
-  const nom = raw.nom ? normalizeNom(raw.nom) : (raw.grapeRegion ?? "Unknown");
-  const id = slug(`${raw.brand}-${raw.expression}-${raw.name ?? nom}`);
+  const id = slug(`${raw.brand}-${raw.expression}-${raw.name ?? ""}`);
   const now = new Date().toISOString();
   const bottle: Bottle = {
     id,
     brand: raw.brand,
     name: raw.name ?? `${raw.brand} ${raw.expression}`,
-    nom,
     expression: raw.expression,
-    abv: raw.abv ?? 40,
-    proof: Math.round((raw.abv ?? 40) * 2),
-    grapeRegion: raw.grapeRegion ?? "Unknown",
-    waterSource: raw.waterSource,
+    abv: raw.abv ?? 12,
     fermentation: raw.fermentation,
-    stillType: raw.stillType,
-    crushing: raw.crushing,
-    distillation: raw.distillation,
-    cooking: raw.cooking,
     aging: raw.aging,
     aromas: raw.aromas ?? [],
     flavors: raw.flavors ?? [],
@@ -119,7 +110,7 @@ export const handler = async (event: EnrichEvent): Promise<Bottle> => {
     gsi1sk: bottle.name,
     enrichTier: tier,
   });
-  const ck = cacheKeyFor(bottle.nom, bottle.brand);
+  const ck = cacheKeyFor(bottle.name, bottle.brand);
   await putItem({ ...keys.cache(ck), bottleId: bottle.id, type: "CachePtr" });
 
   // When this enrich came from a label scan, drop a pointer keyed by the image

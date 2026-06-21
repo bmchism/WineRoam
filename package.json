@@ -7,12 +7,16 @@
     "shared",
     "seed",
     "web",
+    "spirits",
     "functions",
     "infra"
   ],
   "scripts": {
     "dev": "npm run dev -w web",
+    "dev:spirits": "npm run dev -w spirits",
     "build:web": "npm run build -w web",
+    "build:spirits": "npm run build -w spirits",
+    "deploy:web": "node scripts/deploy-web.js",
     "typecheck": "npm run typecheck -w shared && npm run typecheck -w functions && npm run build -w web",
     "synth": "npm run synth -w infra"
   }
